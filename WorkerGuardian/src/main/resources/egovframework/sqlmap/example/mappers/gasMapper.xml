@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.example.gas.mapper.GasMapper">
+
+	<select id="gasSelect" resultType="egovframework.example.gas.vo.GasVO">
+		select * from gas_info
+	</select>
+
+
+	<!-- 선택 된 가스 센서 정보 가져오기 -->
+	<select id="gasInfoList" parameterType="java.lang.String" resultType="egovframework.example.gas.vo.GasVO">
+	    SELECT 
+	        g.*, 
+	        w.WORKER_NAME
+	    FROM 
+	        gas_info g
+	    LEFT JOIN 
+	        worker_info w ON g.GAS_WORKER_ID = w.WORKER_ID
+	    WHERE 
+	        g.gas_id = #{gasId}
+	</select>
+	
+	<!-- 작업자 정보 불러오기 -->
+	<select id="selectWorker" parameterType="java.lang.String" resultType="egovframework.example.gas.vo.GasVO">
+		select WORKER_ID as GAS_WORKER_ID, WORKER_NAME
+		from worker_info
+		where WORKER_ORG = #{org_id}
+	</select>
+	
+	
+	<!-- 가스 센서 등록하기 -->
+	<insert id="insertGas" parameterType="egovframework.example.gas.vo.GasVO">
+		insert into gas_info (GAS_ID,GAS_COMPANY,GAS_TYPE,REG_DATE,GAS_WORKER_ID,DANGER_PER,GAS_NAME)
+		values(#{GAS_ID},#{GAS_COMPANY},#{GAS_TYPE},NOW(),#{GAS_WORKER_ID},#{DANGER_PER},#{GAS_NAME})
+	</insert>
+	
+	
+	<!-- 가스 센서 삭제하기 -->
+	<delete id="deleteGasInfo" parameterType="java.lang.String">
+		delete from gas_info
+		where gas_id = #{gasId}
+	</delete>
+	
+	
+	<!-- 가스 센서 정보 수정하기 -->
+	<update id="updateGas" parameterType="egovframework.example.gas.vo.GasVO">
+		update gas_info set
+		GAS_COMPANY = #{GAS_COMPANY},
+		GAS_TYPE = #{GAS_TYPE},
+		GAS_WORKER_ID = #{GAS_WORKER_ID},
+		DANGER_PER = #{DANGER_PER},
+		GAS_NAME = #{GAS_NAME}
+		where gas_id = #{GAS_ID}
+	</update>
+	
+
+</mapper>

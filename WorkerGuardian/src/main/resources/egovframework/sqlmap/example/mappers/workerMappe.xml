@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.example.worker.mapper.WorkerMapper">
+	
+	<select id="workerSelect" resultType="egovframework.example.worker.vo.WorkerVO">
+		SELECT * FROM worker_info
+		order by reg_date desc
+	</select>
+	
+	<select id="workerInfoList"  parameterType="java.lang.String" resultType="egovframework.example.worker.vo.WorkerVO">
+		SELECT 
+		    w.*, 
+		    o.user_org AS WORKER_ORG_NAME,
+		    s.site_name AS SITE_NAME
+		FROM 
+		    worker_info w
+		LEFT JOIN 
+		    org_info o ON w.worker_org = o.org_id  
+		LEFT JOIN 
+		    site_info s ON w.site_id = s.site_id
+		WHERE 
+		    w.worker_id = #{workerId}
+	</select>
+	
+	<delete id="deleteWorkerInfo">
+		delete from worker_info
+		where worker_id = #{workerId}
+	</delete>
+
+
+	<!-- 작업자 등록하기 -->
+	<insert id="insertWorker" parameterType="egovframework.example.worker.vo.WorkerVO">
+		insert into worker_info (WORKER_ID,WORKER_NAME,WORKER_PHONE,WORKER_ORG,WORKER_GENDER,WORKER_BIRTHDAY,WORKER_INFO,
+		APPLY_FUNCTION_L,APPLY_FUNCTION_G,APPLY_FUNCTION_F,DANGER_DETECT_C,DANGER_DETECT_W,DANGER_DETECT_D,GAS_DETECT,REG_DATE,
+		SITE_ID)
+		values(#{WORKER_ID},#{WORKER_NAME},#{WORKER_PHONE},#{WORKER_ORG},#{WORKER_GENDER},#{WORKER_BIRTHDAY},#{WORKER_INFO},
+		#{APPLY_FUNCTION_L},#{APPLY_FUNCTION_G},#{APPLY_FUNCTION_F},#{DANGER_DETECT_C},#{DANGER_DETECT_W},#{DANGER_DETECT_D},
+		#{GAS_DETECT},NOW(),#{SITE_ID})
+	</insert>
+	
+	<!-- 작업자 수정하기 -->
+	<update id="updateWorker" parameterType="egovframework.example.worker.vo.WorkerVO">
+		update worker_info set
+		WORKER_NAME = #{WORKER_NAME},
+		WORKER_GENDER = #{WORKER_GENDER},
+		WORKER_BIRTHDAY = #{WORKER_BIRTHDAY},
+		WORKER_INFO = #{WORKER_INFO},
+		APPLY_FUNCTION_L = #{APPLY_FUNCTION_L},
+		APPLY_FUNCTION_G = #{APPLY_FUNCTION_G},
+		APPLY_FUNCTION_F = #{APPLY_FUNCTION_F},
+		DANGER_DETECT_C = #{DANGER_DETECT_C},
+		DANGER_DETECT_W = #{DANGER_DETECT_W},
+		DANGER_DETECT_D = #{DANGER_DETECT_D},
+		GAS_DETECT = #{GAS_DETECT},
+		SITE_ID = #{SITE_ID}
+		where worker_id = #{WORKER_ID}	
+	</update>
+	
+	
+	<!-- 작업자 위치 이력 정보 조회하기 -->
+	<select id="workerLocationSelect" parameterType="java.lang.String" resultType="egovframework.example.worker.vo.WorkerVO">
+		
+	</select>
+	
+
+</mapper>

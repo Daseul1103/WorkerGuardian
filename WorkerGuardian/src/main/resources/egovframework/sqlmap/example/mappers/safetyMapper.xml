@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.example.safety.mapper.SafetyMapper">
+	
+	<!-- 안전 이벤트 초기 화면 & 검색 기능 -->
+	<resultMap id="safetyMap" type="egovframework.example.safety.vo.SafetyVO">
+	  <result property="ORG_ID" column="ORG_ID"/>
+	  <result property="REG_DATE" column="REG_DATE"/>
+	  <result property="EVENT_TYPE" column="EVENT_TYPE"/>
+	  <result property="EVENT_CONTENT" column="EVENT_CONTENT"/>
+	  <result property="WORKER_ID" column="WORKER_ID"/>
+	</resultMap>
+	
+	<!-- <select id="safetyList" parameterType="egovframework.example.safety.vo.SafetyVO" resultMap="safetyMap">
+	  SELECT * FROM safety_event
+	  WHERE org_id = 'Uk6Bk'
+	  <if test="EVENT_TYPE != null and EVENT_TYPE != ''">
+	    AND EVENT_TYPE = #{EVENT_TYPE}
+	  </if>
+	  
+	   <if test="start_date != null and start_date != '' and end_date != null and end_date != ''">
+	    	AND reg_date BETWEEN CONCAT(#{start_date}, ' 00:00:00') AND CONCAT(#{end_date}, ' 23:59:59')
+	   </if>
+  
+	  ORDER BY reg_date DESC
+	</select> -->
+	
+	<select id="safetyList" parameterType="egovframework.example.safety.vo.SafetyVO" resultMap="safetyMap">
+	  SELECT * FROM safety_event
+	  WHERE org_id = #{ORG_ID}
+	  
+	  <if test="type_L != null or type_G != null or type_F != null">
+	    AND (
+	      <if test="type_L != null">EVENT_TYPE = #{type_L}</if>
+	      <if test="type_G != null">
+	        <if test="type_L != null"> OR </if>EVENT_TYPE = #{type_G}
+	      </if>
+	      <if test="type_F != null">
+	        <if test="type_L != null or type_G != null"> OR </if>EVENT_TYPE = #{type_F}
+	      </if>
+	    )
+	  </if>
+	  
+	  <if test="start_date != null and start_date != '' and end_date != null and end_date != ''">
+	    AND reg_date BETWEEN CONCAT(#{start_date}, ' 00:00:00') AND CONCAT(#{end_date}, ' 23:59:59')
+	  </if>
+	  
+	  ORDER BY reg_date DESC
+	</select>
+	
+
+
+</mapper>

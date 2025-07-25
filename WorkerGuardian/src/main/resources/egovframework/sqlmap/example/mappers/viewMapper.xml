@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.example.view.mapper.ViewMapper">
+	
+	<select id="siteSelect" resultType="egovframework.example.view.vo.ViewVO">
+		SELECT * FROM site_info
+		order by reg_date desc
+	</select>
+	
+	<select id="siteSelectInfo" parameterType="java.lang.String" resultType="egovframework.example.view.vo.ViewVO">
+	    SELECT * FROM site_info
+	    WHERE site_id = #{nowId}
+	</select>
+	
+	<insert id="insertView" parameterType="egovframework.example.view.vo.ViewVO">
+		INSERT INTO SITE_INFO(SITE_ID,ORG_ID,SITE_NAME,REG_DATE)
+		VALUES(SUBSTRING(
+		    CONCAT(
+		      CHAR(FLOOR(RAND()*26)+65),   
+		      CHAR(FLOOR(RAND()*26)+97),   
+		      CHAR(FLOOR(RAND()*10)+48),   
+		      CHAR(FLOOR(RAND()*26)+65),   
+		      CHAR(FLOOR(RAND()*26)+97)    
+		    ), 1, 5
+		  ),#{ORG_ID},#{SITE_NAME},NOW())
+	</insert>
+	
+	<select id="selectViewId" resultType="java.lang.String">
+		SELECT SITE_ID 
+		FROM SITE_INFO 
+		ORDER BY REG_DATE DESC 
+		LIMIT 1
+	</select>
+
+	<insert id="insertFile" parameterType="egovframework.example.view.vo.ViewVO">
+	    INSERT INTO SITE_FILE_INFO (
+	        FILE_ID, FILE_NAME, FILE_DIR, REG_DT, SITE_ID
+	    ) VALUES (
+	        SUBSTRING(
+	            CONCAT(
+	                CHAR(FLOOR(RAND()*26)+65),   
+	                CHAR(FLOOR(RAND()*26)+97),   
+	                CHAR(FLOOR(RAND()*10)+48),   
+	                CHAR(FLOOR(RAND()*26)+65),   
+	                CHAR(FLOOR(RAND()*26)+97)    
+	            ), 1, 5
+	        ),
+	        #{fileName},
+	        #{fileDir},
+	        NOW(),
+	        #{siteId}
+	    )
+	</insert>
+
+	<select id="siteSelectfile" parameterType="java.lang.String" resultType="egovframework.example.view.vo.ViewVO">
+		select * from site_file_info
+		where site_id = #{nowId}
+	</select>
+	
+	<select id="selectFileList" resultType="egovframework.example.view.vo.ViewVO" parameterType="egovframework.example.view.vo.ViewVO">
+		select *
+    	from site_file_info
+    	where site_id = #{FILE_ID}
+	</select>
+	
+	<delete id="deleteFileInfo">
+		delete from site_file_info
+		where site_id = #{siteId}
+	</delete>
+	
+	<delete id="deleteSiteInfo">
+		delete from site_info
+		where site_id = #{siteId}
+	</delete>
+	
+	
+	<select id="getFileName" resultType="java.lang.String">
+		select file_name from site_file_info
+		where site_id = #{siteId}
+	</select>
+	
+	
+	<!-- <select id="viewInfoList" parameterType="java.lang.String" resultType="egovframework.example.view.vo.ViewVO">
+		SELECT * FROM (
+			SELECT a.site_id, a.site_name, b.file_name
+			FROM site_info a
+			LEFT JOIN site_file_info b
+			ON a.site_id = b.site_id
+			WHERE a.site_id = #{siteId}
+		) AS sub
+	</select> -->
+	
+	<select id="viewInfoList" parameterType="java.lang.String" resultType="egovframework.example.view.vo.ViewVO">
+		SELECT 
+		    sub.site_id,
+		    sub.site_name,
+		    sub.file_name,
+		    beacon_data.beacon_count
+		FROM (
+		    SELECT 
+		        a.site_id, 
+		        a.site_name, 
+		        b.file_name
+		    FROM site_info a
+		    LEFT JOIN site_file_info b ON a.site_id = b.site_id
+		    WHERE a.site_id = #{siteId}
+		) AS sub
+		LEFT JOIN (
+		    SELECT 
+		        site_id, 
+		        COUNT(*) AS beacon_count
+		    FROM beacon_info
+		    WHERE site_id = #{siteId}
+		    GROUP BY site_id
+		) AS beacon_data ON sub.site_id = beacon_data.site_id;
+
+	</select>
+	
+	<select id="limitList" parameterType="java.lang.String" resultType="egovframework.example.view.vo.ViewVO">
+		select beacon_name from beacon_info
+		where site_id = #{siteId}
+	</select>
+	
+	
+	<update id="updateSite" parameterType="egovframework.example.view.vo.ViewVO">
+		update site_info
+		set site_name = #{SITE_NAME}
+		, reg_date = now()
+		where site_id = #{SITE_ID}
+	</update>
+	
+	<insert id="updateFile" parameterType="egovframework.example.view.vo.ViewVO">
+		INSERT INTO SITE_FILE_INFO (
+	        FILE_ID, FILE_NAME, FILE_DIR, REG_DT, SITE_ID
+	    ) VALUES (
+	        SUBSTRING(
+	            CONCAT(
+	                CHAR(FLOOR(RAND()*26)+65),   
+	                CHAR(FLOOR(RAND()*26)+97),   
+	                CHAR(FLOOR(RAND()*10)+48),   
+	                CHAR(FLOOR(RAND()*26)+65),   
+	                CHAR(FLOOR(RAND()*26)+97)    
+	            ), 1, 5
+	        ),
+	        #{fileName},
+	        #{fileDir},
+	        NOW(),
+	        #{siteId}
+	    )
+	</insert>
+	
+	<delete id="siteInfoDelete">
+		delete from site_file_info
+		where site_id = #{SITE_ID}
+	</delete>
+	
+	
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.example.login.mapper.LoginMapper">
+
+	<!-- 로그인 정보 가져오기 -->
+	<select id="loginInfo" parameterType="java.lang.String" resultType="egovframework.example.login.vo.LoginVO">
+		SELECT 
+		    u.*, 
+		    o.user_org
+		FROM 
+		    user_info u
+		LEFT JOIN 
+		    org_info o ON u.org_id = o.org_id
+		WHERE 
+		    u.user_id = #{user_id}
+		    AND u.user_pw = #{user_pw}
+	</select>
+
+
+	<!-- 회원가입 시 아이디 중복 체크하기 -->
+	<select id="idDupleChk" parameterType="java.lang.String" resultType="egovframework.example.login.vo.LoginVO">
+		select * from user_info
+		where user_id = #{idVal}
+	</select>
+
+
+	<!-- 회사 체크하기 -->
+	<select id="orgChk" parameterType="java.lang.String" resultType="egovframework.example.login.vo.LoginVO">
+		select * from org_info
+		where org_id = #{orgVal}
+	</select>	
+	
+	
+	<!-- 회원가입 회원 등록하기 -->
+	<insert id="joinSave" parameterType="egovframework.example.login.vo.LoginVO">
+		insert into user_info(USER_ID,USER_PW,USER_NAME,USER_PHONE,ORG_ID,REG_DATE)
+		values(#{USER_ID},#{USER_PW},#{USER_NAME},#{USER_PHONE},#{ORG_ID},NOW())
+	</insert>
+
+
+</mapper>

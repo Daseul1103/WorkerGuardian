@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.example.mypage.mapper.MypageMapper">
+	
+	<update id="infoSave" parameterType="egovframework.example.login.vo.LoginVO">
+	    update user_info
+	    <set>
+	        user_name = #{USER_NAME},
+	        user_phone = #{USER_PHONE}
+	        <if test="USER_PW != null and USER_PW != ''">
+	            ,user_pw = #{USER_PW}
+	        </if>
+	    </set>
+	    where user_id = #{USER_ID}
+	</update>
+
+
+	<select id="loginInfo" parameterType="egovframework.example.login.vo.LoginVO"  resultType="egovframework.example.login.vo.LoginVO">
+		select * from user_info
+		where user_id = #{USER_ID}
+	</select>
+</mapper>

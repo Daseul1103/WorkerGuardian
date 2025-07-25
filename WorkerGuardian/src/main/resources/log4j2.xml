@@ -1,0 +1,64 @@
+<Configuration>
+	<Appenders>
+	<Console name="console" target="SYSTEM_OUT">
+	<PatternLayout pattern="%d %5p [%c] %m%n"/>
+	</Console>
+	</Appenders>
+	<loggers>
+	<root level="debug" additivity="true">
+	<AppenderRef ref="console"/>
+	<AppenderRef ref="RollingFile"/>
+	<AppenderRef ref="RollingFileError" level="ERROR"/>
+	</root>
+	<logger name="egovframework.example" level="TRACE" additivity="false">
+	<AppenderRef ref="console"/>
+	<AppenderRef ref="RollingFile"/>
+	<AppenderRef ref="RollingFileError" level="ERROR"/>
+	</logger>
+	<Logger name="java.sql" level="DEBUG" additivity="false">
+	<AppenderRef ref="RollingFile"/>
+	<AppenderRef ref="RollingFileError" level="ERROR"/>
+	<AppenderRef ref="console"/>
+	</Logger>
+	<Logger name="egovframework" level="DEBUG" additivity="false">
+	<AppenderRef ref="RollingFile"/>
+	<AppenderRef ref="RollingFileError" level="ERROR"/>
+	<AppenderRef ref="console"/>
+	</Logger>
+	<Logger name="jdbc.sqltiming" level="DEBUG" additivity="false">
+	<AppenderRef ref="RollingFile"/>
+	<AppenderRef ref="RollingFileError" level="ERROR"/>
+	<AppenderRef ref="console"/>
+	</Logger>
+	<Logger name="jdbc" level="OFF" additivity="false">
+	<AppenderRef ref="RollingFile"/>
+	<AppenderRef ref="RollingFileError" level="ERROR"/>
+	<AppenderRef ref="console"/>
+	</Logger>
+	<Logger name="org.apache.commons.digester" level="ERROR" additivity="false">
+	<AppenderRef ref="RollingFile"/>
+	<AppenderRef ref="RollingFileError" level="ERROR"/>
+	<AppenderRef ref="console"/>
+	</Logger>
+	<Logger name="jdbc.sqlonly" level="DEBUG" additivity="false">
+	<AppenderRef ref="RollingFile"/>
+	<AppenderRef ref="RollingFileError" level="ERROR"/>
+	<AppenderRef ref="console"/>
+	</Logger>
+	<Logger name="jdbc.resultsettable" level="DEBUG" additivity="false">
+	<AppenderRef ref="RollingFile"/>
+	<AppenderRef ref="RollingFileError" level="ERROR"/>
+	<AppenderRef ref="console"/>
+	</Logger>
+	<Logger name="org.springframework" level="DEBUG" additivity="false">
+	<AppenderRef ref="RollingFile"/>
+	<AppenderRef ref="RollingFileError" level="ERROR"/>
+	<AppenderRef ref="console"/>
+	</Logger>
+	<Logger name="org.springframework.web" level="DEBUG" additivity="false">
+	<AppenderRef ref="RollingFile"/>
+	<AppenderRef ref="RollingFileError" level="ERROR"/>
+	<AppenderRef ref="console"/>
+	</Logger>
+	</loggers>
+</Configuration>

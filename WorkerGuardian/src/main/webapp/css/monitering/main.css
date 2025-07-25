@@ -1,0 +1,318 @@
+@charset "UTF-8";
+
+@font-face {
+            font-family: 'Pretendard-Regular';
+            src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        * {
+            font-family : 'Pretendard-Regular';
+        }
+
+        html,body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .main_div {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu_div {
+            width: 100%;
+            height : 10%;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo_div { 
+            width: 8%;
+            height: 70%;
+            margin-left: 5%;
+            background-image: url('/images/logo.png');
+            background-size: contain;         
+            background-repeat: no-repeat;  
+
+        }
+
+        .title_div {
+            width: 100%;
+            height: 10%;
+        }
+
+        .title {
+            margin-left: 5%;
+        }
+
+        .content_div{
+            width: 100%;
+            height: 80%;
+            display: flex;
+        }
+
+        .monitering_div {
+            width: 65%;
+            height: 95%;
+            margin-left: 5%;
+            border: 1px solid gray;
+            position:relative;
+        }
+
+        .sideMenu {
+            width: 20%;
+            height: 95%;
+            display: flex;
+            flex-direction: column;
+            margin-left: 5%;
+        }
+
+        .sitemenu_div {
+            width: 100%;
+            height: 50%;
+        }
+
+        .message_div {
+            width: 100%;
+            height: 50%;
+        }
+
+        .sitetile {
+            width: 100%;
+            height: 20%;
+
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .sitemenu {
+            width: 100%;
+            height: auto;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 5px;
+            background-color: #fff;
+        }
+
+        .alramMenu {
+            width: 100%;
+            height: 270px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            overflow-y: scroll;
+
+            padding: 5px;
+        }
+
+        .alram-item {
+            padding: 10px;
+            margin-bottom: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .site-item {
+        padding: 10px;
+        margin-bottom: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #fff;
+        font-size: 14px;
+        text-align: center;
+        }
+
+        .site-item.highlight {
+            background-color: #ddd; 
+        }
+
+        
+        .beaconImg {
+        	background-image: url('/images/beacon.png');
+        	background-size: contain;         
+            background-repeat: no-repeat; 
+            
+            width: 100px;
+		    height: 60px;
+        }
+        
+        #beacon1 , #beacon7 , #beacon10 , #beacon13{
+        	width:100px;
+        	height : 100px;
+        	display: flex;
+    		flex-direction: column;
+    		align-items: center;
+    		margin-top: 359px;
+    		margin-left: 973px;
+    		position: absolute;
+        }
+        
+        #beacon2, #beacon8, #beacon11 ,#beacon14{
+        	width:100px;
+        	height : 100px;
+        	display: flex;
+    		flex-direction: column;
+    		align-items: center;
+    		margin-top: 114px;
+    		margin-left: 149px;
+    		position: absolute;
+        }
+        
+        #beacon3 ,#beacon9, #beacon12 , #beacon15{
+        	width:100px;
+        	height : 100px;
+        	display: flex;
+    		flex-direction: column;
+    		align-items: center;
+    		margin-top: 539px;
+    		margin-left: 342px;
+    		position: absolute;
+        }
+        
+        #beacon4 {
+        	width:100px;
+        	height : 100px;
+        	display: flex;
+    		flex-direction: column;
+    		align-items: center;
+    		margin-top: 359px;
+    		margin-left: 973px;
+    		position: absolute;
+        }
+        
+        #beacon5 {
+        	width:100px;
+        	height : 100px;
+        	display: flex;
+    		flex-direction: column;
+    		align-items: center;
+    		margin-top: 114px;
+    		margin-left: 149px;
+    		position: absolute;
+        }
+        
+        #beacon6 {
+        	width:100px;
+        	height : 100px;
+        	display: flex;
+    		flex-direction: column;
+    		align-items: center;
+    		margin-top: 539px;
+    		margin-left: 342px;
+    		position: absolute;
+        }
+        
+        [id^="beaconAlram"] {
+		    width: 350px;
+		    height: 200px;
+			margin-left: 410px;
+		    margin-top: -220px;
+		    background-color: white;
+		    border: solid 1px gray;
+		    position: absolute;
+		    border-radius:5px;
+		}
+
+        .alramTitle {
+            width: 350px;
+            height: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .titleDiv {
+            width: 350px;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-end;
+            justify-content: space-around;
+        }
+
+        .areaLineDiv {
+            width: 300px;
+            height: 1px;
+            margin-left: 25px;
+            margin-top: 5px;
+            border-bottom: 1px solid gray;
+        }
+
+        .alramContent {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 350px;
+            height: 100px;
+        }
+
+        .alramBtn {
+            width: 350px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .menuZip {
+            width: 92%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .topMenuDiv {
+            width: 100%;
+            height: 40%;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .bottomMenuDiv {
+            width: 100%;
+            height: 60%;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+
+        .logout, .mypage, .help {
+                border: 1px solid #ababab;
+                text-align: center;
+                display: flex;
+                border-radius: 20px;
+                width: 90px;
+                height: 30px;
+                align-items: center;
+                justify-content: center;
+                margin-top: 5px;
+                margin-right: 10px;
+                cursor : pointer;
+        }
+
+        .login {
+                text-align: center;
+                display: flex;
+                width: 90px;
+                height: 30px;
+                align-items: center;
+                justify-content: center;
+                margin-top: 5px;
+        }
+        
+        .beacon-box {
+		    width: 100px;
+		    height: 100px;
+		    display: flex;
+		    flex-direction: column;
+		    align-items: center;
+		    position: absolute;
+		}

@@ -1,0 +1,282 @@
+@charset "UTF-8";
+
+
+@font-face {
+            font-family: 'Pretendard-Regular';
+            src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        * {
+            font-family : 'Pretendard-Regular';
+        }
+
+        html,body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .main_div {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .menu_div {
+            width: 100%;
+            height : 10%;
+            /* border-bottom: 1px solid #ccc; */
+            display: flex;
+            align-items: center;
+        }
+
+        .logo_div { 
+            width: 8%;
+            height: 70%;
+            margin-left: 5%;
+            background-image: url('/images/logo.png');
+            background-size: contain;         
+            background-repeat: no-repeat;  
+
+        }
+
+        .menuZip {
+            width: 92%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .topMenuDiv {
+            width: 100%;
+            height: 40%;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .bottomMenuDiv {
+            width: 100%;
+            height: 60%;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+
+        .logout, .mypage, .help {
+                border: 1px solid #ababab;
+                text-align: center;
+                display: flex;
+                border-radius: 20px;
+                width: 90px;
+                height: 30px;
+                align-items: center;
+                justify-content: center;
+                margin-top: 5px;
+                margin-right: 10px;
+                cursor : pointer;
+        }
+
+        .login {
+                text-align: center;
+                display: flex;
+                width: 90px;
+                height: 30px;
+                align-items: center;
+                justify-content: center;
+                margin-top: 5px;
+        }
+
+        .content_div {
+            margin-top: 4%;
+            width: 80%;
+            height: 75%;
+            display: flex;
+        }
+
+        .site_menu {
+            width: 20%;
+            height: 100%;
+            margin-right: 5%;
+        }
+
+        .site_info {
+            width: 75%;
+            height: 100%;
+        }
+
+        .site_menu_div {
+            width: 100%;
+            height: auto;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 5px;
+            background-color: #fff;
+        }
+
+        .site-item {
+	        padding: 10px;
+	        margin-bottom: 5px;
+	        border: 1px solid #ccc;
+	        border-radius: 4px;
+	        background-color: #fff;
+	        font-size: 14px;
+	        text-align: center;
+	        cursor: pointer;
+        }
+
+        .site_insert_btn_div {
+            width: 100%;
+        }
+
+        .site_insert_btn {
+            width: 120px;
+            height: 40px;
+            border-radius: 5px;
+            background: linear-gradient(to left, #176bf7, #227fe9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .site_insert_btn > p {
+            color: white;
+        }
+
+
+        .main_title_div {
+            width: 100%;
+            height: 10%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+
+        }
+
+        .home {
+            width: 22px;
+            height: 22px;
+            background-size: contain;         
+            background-repeat: no-repeat; 
+            background-image: url('/images/Whome.svg');
+        }
+
+        .next {
+            width: 22px;
+            height: 22px;
+            background-size: contain;         
+            background-repeat: no-repeat; 
+            background-image: url('/images/Wnext.svg');
+        }
+        
+        .breadcrumb {
+            width: auto;
+            height: auto;
+            display: flex;
+            align-items: center;
+            margin-left: 20%;
+        }
+        
+        .bread_div {
+            width: 100%;
+            height: 5%;
+            background: linear-gradient(to right, #ff7300, #00a6ff);
+            display: flex;
+            align-items: center;
+        }
+
+        table {
+                width: 100%;
+                border-collapse: collapse;
+                border-spacing: 0;
+                margin-bottom: 30px;
+        }
+
+        td {
+            border-top: 1px solid #eceff0;
+            line-height: 1.2;
+            padding: 15px 20px;
+            font-size: 16px;
+            font-weight: 400;
+            color: #000;
+            vertical-align: middle;
+            border-bottom: 1px solid #eceff0;
+            border-left: 1px solid #eceff0;
+        }
+
+        th {
+            background-color: #f5f8fb;
+            border-bottom: 1px solid #eceff0;
+            color: #000;
+            vertical-align: middle;
+            font-size: 16px;
+            padding: 15px;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        table tr:first-child {
+            border-top: 2px solid #305363;
+        }
+
+        .mini_title {
+            margin-bottom: 20px;
+        }
+
+        .main_content_div {
+            width: 100%;
+            height: 70%;
+            
+        }
+
+        .btn_div {
+            width: 100%;
+            height: 20%;
+            display: flex;
+            align-items: flex-start;
+    		justify-content: space-between;
+        }
+        
+        .deleteBtn {
+            width: 150px;
+            height: 45px;
+            border-radius: 5px;
+            border: 1px solid #ababab;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .updateBtn {
+            width: 150px;
+            height: 45px;
+            border-radius: 5px;
+            background-color: #44a7ef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            color: white;
+            border: 1px solid #ababab;
+        }
+        
+        .site-item.highlight {
+            background-color: #ddd; /* 강조용 배경색 (예: 현장 A) */
+            cursor: pointer;
+        }
+        
+        .site_file{
+        	cursor: pointer;
+        	margin: 0;
+        	color:#176bf7;
+        }

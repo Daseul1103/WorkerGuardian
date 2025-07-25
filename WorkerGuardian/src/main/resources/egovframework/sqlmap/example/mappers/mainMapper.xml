@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.example.main.mapper.MainMapper">
+
+    <select id="siteList" resultType="egovframework.example.main.vo.MainVO">
+        select site_id, site_name
+        from site_info
+        where org_id = #{org_id}
+        order by reg_date desc
+    </select>
+    
+    <!-- 선택 된 현장에 등록 된 비콘들의 정보 가져오기 -->
+    <select id="beaconInfo" parameterType="java.lang.String" resultType="egovframework.example.main.vo.MainVO">
+    	SELECT * FROM beacon_info
+		WHERE site_id = #{siteId}
+		and LIMIT_FLAG = 'Y'
+    </select>
+    
+    <select id="backgroundInfo" parameterType="java.lang.String" resultType="egovframework.example.main.vo.MainVO">
+    	select * from site_file_info
+    	where site_id = #{siteId}
+    </select>
+
+</mapper>
