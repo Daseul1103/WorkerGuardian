@@ -152,7 +152,7 @@ public class WorkerController {
     @RequestMapping("/worker/locationList.do")
     public ModelAndView WorkerLocationMapping(@RequestParam("workerId") String workerId, HttpSession httpSession, HttpServletRequest request, Model model) throws Exception {
         ModelAndView mav = new ModelAndView("jsonView");
-        List<WorkerVO> locationList = workerService.workerLocationSelect(workerId);
+        /*List<WorkerVO> locationList = workerService.workerLocationSelect(workerId);*/
         mav.setViewName("/worker/workerLocation");
         return mav;
     }

@@ -181,7 +181,8 @@
             height: auto;
             display: flex;
             align-items: center;
-            margin-left: 20%;
+            /* margin-left: 20%; */
+            margin-right : 7.5%;
         }
         
         .bread_div {
@@ -190,7 +191,9 @@
             background: linear-gradient(to right, #ff7300, #00a6ff);
             display: flex;
             align-items: center;
+            justify-content : flex-end;
         }
+        
 
         table {
                 width: 100%;

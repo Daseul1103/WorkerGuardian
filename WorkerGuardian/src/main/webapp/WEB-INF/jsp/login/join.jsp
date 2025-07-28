@@ -188,7 +188,7 @@
             <div class="breadcrumb">
                 <div class="home"></div>
                 <div class="next"></div>
-                <div class="menu1" style="color: white; font-size: 16px;">로그인</div>
+                <div class="menu1" style="color: white; font-size: 16px;">회원가입</div>
             </div>
         </div>
         <div class="login_div">

@@ -71,12 +71,22 @@
             flex-direction: column;
         }
 
+        .breadcrumb {
+            width: auto;
+            height: auto;
+            display: flex;
+            align-items: center;
+            /* margin-left: 20%; */
+            margin-right : 7.5%;
+        }
+        
         .bread_div {
             width: 100%;
             height: 5%;
             background: linear-gradient(to right, #ff7300, #00a6ff);
             display: flex;
             align-items: center;
+            justify-content : flex-end;
         }
 
         .login_div {
@@ -95,13 +105,7 @@
             margin-left: 5%;  
         }
 
-        .breadcrumb {
-            width: auto;
-            height: auto;
-            display: flex;
-            align-items: center;
-            margin-left: 20%;
-        }
+        
 
         .home {
             width: 22px;

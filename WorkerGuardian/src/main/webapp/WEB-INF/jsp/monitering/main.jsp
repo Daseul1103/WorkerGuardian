@@ -256,6 +256,13 @@
                 </div>
             </div>
         </div>
+        <div class="bread_div">
+            <div class="breadcrumb">
+                 <div class="home"></div>
+                <div class="next"></div>
+                <div class="menu1" style="color: white; font-size: 16px;">현장 모니터링</div>
+            </div>
+        </div>
         <div class="title_div">
             <div class="title">
                 <h1 id="siteTitle">현장 미선택</h1>

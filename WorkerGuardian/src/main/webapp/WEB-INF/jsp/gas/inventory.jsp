@@ -132,11 +132,7 @@
                     </div>
                     <div class="breadcrumb">
                         <!-- #969696 -->
-                        <div class="home"></div>
-                        <div class="next"></div>
-                        <div class="menu1" style="color: #969696">가스 센서 관리</div>
-                        <div class="next"></div>
-                        <div class="menu2">가스 센서 상세 정보</div>
+
                     </div>
                 </div>
                 <div class="main_content_div">
