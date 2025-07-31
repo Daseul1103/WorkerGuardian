@@ -149,11 +149,21 @@ public class WorkerController {
         return mav;
     }
 
+    
+    
+    // 작업자 위치 이력 조회
     @RequestMapping("/worker/locationList.do")
     public ModelAndView WorkerLocationMapping(@RequestParam("workerId") String workerId, HttpSession httpSession, HttpServletRequest request, Model model) throws Exception {
         ModelAndView mav = new ModelAndView("jsonView");
-        /*List<WorkerVO> locationList = workerService.workerLocationSelect(workerId);*/
+        
+        List<WorkerVO> locationList = workerService.workerLocationSelect(workerId);
+        int listSize = locationList.size();
+        
+        mav.addObject("locationData", locationList);
+        mav.addObject("locationDataSize", listSize);
+        
         mav.setViewName("/worker/workerLocation");
+        
         return mav;
     }
 }

@@ -39,7 +39,9 @@
 	        */
 	        var ringVal = 1;
 	        
-	        var workername = ["김철수", "이영희", "박민수", "홍하나", "홍길동", "김수환무"];
+	        var orgId;
+	        let workername = [];
+	        let workerid = [];
 	        var accident = ["낙상", "가스", "위험구역 진입"];
 	        
 	        let beaconId = [];
@@ -69,6 +71,8 @@
 	            // 비콘 정보 배열, 현재 현장 초기화 하기
 	            beaconId = [];
 				beaconName = [];
+				workername = [];
+				workerid = [];
 				nowSiteName = '';
 				
 	            // 클릭 시 가져온 id 사용하여 해당 현장의 비콘 정보 가져오기(ajax)
@@ -80,8 +84,11 @@
 				
 				        var backgroundVal = data.background;
 				        var beaconInfoList = data.BeaconInfoList;
+				        var workerInfoList = data.workerInfoList;
 				        var html = '';
 				
+				        orgId = data.OrgId;
+				        
 				        beaconInfoList.forEach(function(beaconInfo) {
 				            var style = 'margin-left: ' + beaconInfo.beacon_X + '%; margin-top: ' + beaconInfo.beacon_Y + '%;';
 				            html += '<div id="' + beaconInfo.uuid + '" class="beacon-box" style="' + style + '">';
@@ -94,8 +101,15 @@
 					        // 비콘 정보 배열에 넣기
 					        beaconId.push(beaconInfo.uuid);           // id 배열에 넣기
 	    					beaconName.push(beaconInfo.beacon_NAME);  // 비콘 이름 배열에 넣기
+	    					
 				         
 				        });
+				        
+				        workerInfoList.forEach(function(workerInfo) {
+				        	workerid.push(workerInfo.worker_ID);
+				        	workername.push(workerInfo.worker_NAME);
+				        });
+				        
 				
 				        // 요소 집어넣기
 				        $('.monitering_div').html(html);
@@ -108,8 +122,15 @@
 		            	// 현장 선택 정보 타이틀 띄우기
 		            	$('#siteTitle').text(siteName);
 		            	
-		            	// 이후 작업 진행 - 비콘 정보 배열 사용해서 랜덤으로 안내 메세지 뜨게하는 함수 실행하기
-			            interval = setInterval(function() { randomAlram( beaconId,beaconName ) }, 25000);
+		            	
+		            	if(workername.length <= 0) {
+		            		return false;
+		            	} else {
+		            		// 이후 작업 진행 - 비콘 정보 배열 사용해서 랜덤으로 안내 메세지 뜨게하는 함수 실행하기
+				            interval = setInterval(function() { randomAlram( beaconId,beaconName,siteId ) }, 15000);
+		            	}
+		            	
+		            	
 		            		            	
 				    },
 				    error: function(xhr, status, error) {
@@ -119,7 +140,7 @@
 	        });
 	        
 	        // 알람 띄우기 전 사전 작업 함수
-	        function randomAlram(beaconId, beaconName) {
+	        function randomAlram(beaconId, beaconName ,siteId) {
 	        	
 	        	// 받아온 데이터가 있는지 확(비어 있는지)
 	        	if (!beaconId.length || !beaconName.length) {
@@ -146,18 +167,56 @@
 
 		            	 var currentDateTime = yy + '/' + mm + '/' + dd + ' ' + hh + ':' + min + ':' + ss; // 날짜 변수
 		            	 
-		            	 var workerIndex = Math.floor(Math.random() * 6); // 0~5 까지 출력 - 작업자 뽑기 전용 랜덤 변수
+		            	 var workerLength = workername.length;
+		            	 var workerIndex = Math.floor(Math.random() * workerLength); // 0~5 까지 출력 - 작업자 뽑기 전용 랜덤 변수
 		            	 var accidentIndex = Math.floor(Math.random() * 3); // 0~2 까지 출력 - 사고 뽑기 전용 랜덤 변수
 			        	
 		            	 // 알림 만들어서 띄워주는 함수
-		            	 makeAlram(randomIndex,workerIndex,accidentIndex,currentDateTime);
+		            	 makeAlram(randomIndex,workerIndex,accidentIndex,currentDateTime,siteId);
 			        	
 			        }
 			    }
 	        	
 	        	
-	        	function makeAlram(randomIndex,workerIndex,accidentIndex,currentDateTime) {
+	        	function makeAlram(randomIndex,workerIndex,accidentIndex,currentDateTime,siteId) {
 	        		
+	        		var dOrgId = orgId;
+        	 		  var dSiteId = siteId;
+        	 		  var dBeaconId = beaconId[randomIndex];
+        	 		  var dWorkerId = workerid[workerIndex];
+        	 		  var dEventType = '';
+        	 		  
+        	 		  
+        	 		  if(accidentIndex == 0) {
+        	 			dEventType = "F";
+        	 		  } else if(accidentIndex == 1) {
+        	 			dEventType = "G";
+        	 		  } else {
+        	 			dEventType = "D";
+        	 		  }
+        	 		 
+        	 		  
+        	 		$.ajax({
+  				    url: "/main/insertTestData.ajax",
+  				    data: {
+  				        "ORG_ID" : dOrgId,
+  				        "SITE_ID" : dSiteId,
+  				        "UUID" : dBeaconId,
+  				        "WORKER_ID" : dWorkerId,
+  				        "EVENT_TYPE" : dEventType,
+  				        "EVENT_TIME" : currentDateTime
+  				    },
+  				    success: function(data) {
+  				    	console.log("ajax 성공");
+  				    },    				    
+  				    error: function(xhr, status, error) {
+  				        console.log('ajax 요청에 문제가 있습니다.', error);
+  				    }
+  				    
+        	 		});
+        	 		
+        	 		
+        	 		
 	        		// 알림 생성하기 (고쳐야됨)
 	        		
 	        		var inputText = 
@@ -206,13 +265,9 @@
           	 		  $('.alramMenu').prepend(alramText); // 알림함에 띄우기
           	 		  
           	 		  // 알림 인덱스 증가 시키기
-          	 		  ringVal = ringVal + 1;
+          	 		  ringVal = ringVal + 1; 
           	 		  
-          	 		  // 추가 적으로 닫기 버튼 클릭 했을 때 알림 지워지는 기능도 만들어야 함
 	        	}
-	        	
-	        	
-	        	
 	        }
 	        
 	     	// 도움말 파일 다운로드하기

@@ -1,17 +1,21 @@
 package egovframework.example.main.web;
 
-import egovframework.example.login.vo.LoginVO;
-import egovframework.example.main.service.MainService;
-import egovframework.example.main.vo.MainVO;
 import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import egovframework.example.login.vo.LoginVO;
+import egovframework.example.main.service.MainService;
+import egovframework.example.main.vo.MainVO;
 
 @Controller
 // 비콘 모니터링 관리 컨트롤러
@@ -77,12 +81,30 @@ public class MainController {
             List<MainVO> beaconInfoList = mainService.beaconInfo(siteId);
             MainVO background = mainService.backgroundInfo(siteId);
             
-            mav.addObject("BeaconInfoList", beaconInfoList);
+            LoginVO loginInfo = (LoginVO) httpSession.getAttribute("LoginInfo");
+            String orgId = loginInfo.getORG_ID();
+            
+            List<MainVO> workerInfoList = mainService.workerInfoList(siteId);
+            
+            mav.addObject("workerInfoList", workerInfoList); // 작업자 정보
+            mav.addObject("BeaconInfoList", beaconInfoList);  // 비콘 정보
             mav.addObject("background", background);
+            mav.addObject("OrgId", orgId); // 회사 id
         }
 
         return mav;
     }
     
+    
+    
+    @RequestMapping(value="/main/insertTestData.ajax")
+    public ModelAndView testDataInsert(HttpSession httpSession, HttpServletRequest request, Model model
+    		, @ModelAttribute MainVO vo ) throws Exception {
+    	ModelAndView mav = new ModelAndView("jsonView"); // ModelAndView 객체 생성
+    	
+    	mainService.insertTestData(vo);
+    	
+    	return mav;
+    }
     
 }

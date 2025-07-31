@@ -14,8 +14,60 @@ public class MainVO {
 	public String BEACON_X;  // 비콘 x값
 	  
 	public String FILE_NAME;  // 현장 파일 이름
+	
+	public String WORKER_ID;
+	
+	public String WORKER_NAME;
+	
+	public String ORG_ID;
+	
+	public String EVENT_TYPE;
+	
+	public String EVENT_TIME;
 
 	
+	
+	
+	public String getORG_ID() {
+		return ORG_ID;
+	}
+
+	public void setORG_ID(String oRG_ID) {
+		ORG_ID = oRG_ID;
+	}
+
+	public String getEVENT_TYPE() {
+		return EVENT_TYPE;
+	}
+
+	public void setEVENT_TYPE(String eVENT_TYPE) {
+		EVENT_TYPE = eVENT_TYPE;
+	}
+
+	public String getEVENT_TIME() {
+		return EVENT_TIME;
+	}
+
+	public void setEVENT_TIME(String eVENT_TIME) {
+		EVENT_TIME = eVENT_TIME;
+	}
+
+	public String getWORKER_ID() {
+		return WORKER_ID;
+	}
+
+	public void setWORKER_ID(String wORKER_ID) {
+		WORKER_ID = wORKER_ID;
+	}
+
+	public String getWORKER_NAME() {
+		return WORKER_NAME;
+	}
+
+	public void setWORKER_NAME(String wORKER_NAME) {
+		WORKER_NAME = wORKER_NAME;
+	}
+
 	public String getSITE_ID() {
 		return SITE_ID;
 	}

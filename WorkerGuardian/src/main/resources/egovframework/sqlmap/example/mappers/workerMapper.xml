@@ -61,7 +61,9 @@
 	
 	<!-- 작업자 위치 이력 정보 조회하기 -->
 	<select id="workerLocationSelect" parameterType="java.lang.String" resultType="egovframework.example.worker.vo.WorkerVO">
-		
+		select * from location_info_today
+		where worker_id = #{workerId}
+		order by location_time desc
 	</select>
 	
 

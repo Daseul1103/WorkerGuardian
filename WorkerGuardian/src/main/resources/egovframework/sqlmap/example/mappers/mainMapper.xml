@@ -18,9 +18,23 @@
 		and LIMIT_FLAG = 'Y'
     </select>
     
+    
+    <select id="workerInfoList" parameterType="java.lang.String" resultType="egovframework.example.main.vo.MainVO">
+    	select WORKER_ID,WORKER_NAME
+    	from worker_info
+    	where site_id = #{siteId}
+    </select>
+    
+    
     <select id="backgroundInfo" parameterType="java.lang.String" resultType="egovframework.example.main.vo.MainVO">
     	select * from site_file_info
     	where site_id = #{siteId}
     </select>
+    
+    
+    <insert id="insertTestData" parameterType="egovframework.example.main.vo.MainVO">
+    	insert into monitering_site(SITE_ID,ORG_ID,UUID,WORKER_ID,EVENT_TYPE,EVENT_TIME)
+    	values(#{SITE_ID},#{ORG_ID},#{UUID},#{WORKER_ID},#{EVENT_TYPE},#{EVENT_TIME})
+    </insert>
 
 </mapper>

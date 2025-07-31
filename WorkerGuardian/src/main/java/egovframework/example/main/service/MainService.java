@@ -15,4 +15,9 @@ public interface MainService {
 	// 선택된 현장 화면 정보 가져오기
 	MainVO backgroundInfo(String paramString) throws Exception;
 	
+	List<MainVO> workerInfoList(String siteId) throws Exception;
+	
+	
+	void insertTestData(MainVO vo) throws Exception;
+	
 }

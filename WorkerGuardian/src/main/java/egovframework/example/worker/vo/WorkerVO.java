@@ -40,6 +40,38 @@ public class WorkerVO {
 	private int GAS_DETECT;
 	  
 
+	private String LOCATION_TIME;
+	
+	private String WORKER_LOCATION_X;
+	
+	private String WORKER_LOCATION_Y;
+	
+	
+	
+	public String getLOCATION_TIME() {
+		return LOCATION_TIME;
+	}
+
+	public void setLOCATION_TIME(String lOCATION_TIME) {
+		LOCATION_TIME = lOCATION_TIME;
+	}
+
+	public String getWORKER_LOCATION_X() {
+		return WORKER_LOCATION_X;
+	}
+
+	public void setWORKER_LOCATION_X(String wORKER_LOCATION_X) {
+		WORKER_LOCATION_X = wORKER_LOCATION_X;
+	}
+
+	public String getWORKER_LOCATION_Y() {
+		return WORKER_LOCATION_Y;
+	}
+
+	public void setWORKER_LOCATION_Y(String wORKER_LOCATION_Y) {
+		WORKER_LOCATION_Y = wORKER_LOCATION_Y;
+	}
+
 	public String getWORKER_ID() {
 		return WORKER_ID;
 	}

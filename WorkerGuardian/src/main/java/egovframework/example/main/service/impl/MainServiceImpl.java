@@ -33,11 +33,20 @@ public class MainServiceImpl implements MainService {
         return mainMapper.beaconInfo(siteId);
     }
 
+    @Override
+	public List<MainVO> workerInfoList(String siteId) throws Exception {
+		return mainMapper.workerInfoList(siteId);
+	}
     
 	// 선택된 현장 화면 정보 가져오기
     @Override
     public MainVO backgroundInfo(String siteId) throws Exception {
         return mainMapper.backgroundInfo(siteId);
+    }
+    
+    @Override
+	public void insertTestData(MainVO vo) throws Exception {
+    	mainMapper.insertTestData(vo);
     }
     
     
