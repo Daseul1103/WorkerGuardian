@@ -48,5 +48,12 @@ public class LoginServiceImpl implements LoginService {
     }
     
     
+    // 로그인 접속 시간 등록
+    @Override
+    public void insertLoginTime(String userId) throws Exception {
+    	loginMapper.insertLoginTime(userId);
+    }
+    
+    
 }
 

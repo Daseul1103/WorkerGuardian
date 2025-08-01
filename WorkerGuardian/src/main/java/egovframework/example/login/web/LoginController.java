@@ -65,6 +65,9 @@ public class LoginController {
             httpSession.setAttribute("LoginInfo", loginInfo);
             
             mav.addObject("msg", "success");
+                   
+            // 접속 시간 저장하기
+            loginService.insertLoginTime(user_id);
         }
         return mav;
     }

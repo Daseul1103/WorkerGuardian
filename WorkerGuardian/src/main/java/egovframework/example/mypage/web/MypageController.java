@@ -1,15 +1,20 @@
 package egovframework.example.mypage.web;
 
-import egovframework.example.login.vo.LoginVO;
-import egovframework.example.mypage.service.MypageService;
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import egovframework.example.login.vo.LoginVO;
+import egovframework.example.mypage.service.MypageService;
+import egovframework.example.mypage.vo.MypageVO;
 
 @Controller
 // 마이페이지 관리 컨트롤러
@@ -29,6 +34,18 @@ public class MypageController {
         if (httpSession.getAttribute("LoginInfo") == null) {
             mav.setViewName("redirect:/login/notSession.do"); // 로그인 세션 없는 경우 강제 로그아웃
         } else {
+        	LoginVO loginSessionList = (LoginVO) httpSession.getAttribute("LoginInfo");       	
+        	String userId = loginSessionList.getUSER_ID();
+        	
+        	MypageVO loginTimeList = mypageService.loginTimeList(userId);
+        	
+        	String formattDate = loginTimeList.getLOGIN_TIME();  // date 타입 포맷팅
+        	formattDate = formattDate.substring(0, formattDate.length() - 2);
+        	
+        	loginTimeList.setLOGIN_TIME(formattDate);
+        	
+        	
+        	mav.addObject("loginTimeList", loginTimeList);
             mav.addObject("loginInfo", httpSession.getAttribute("LoginInfo"));
             mav.setViewName("/mypage/inventory"); // 내 정보로 이동
         }

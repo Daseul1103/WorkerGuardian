@@ -195,7 +195,7 @@
                     <div class="login"><p>${loginInfo.USER_NAME}님</p></div>
                     <div class="logout"><p>로그아웃</p></div>
                     <div class="mypage"><p>마이페이지</p></div>
-                    <div class="help"><p>도움말</p></div>
+                    <div class="help" style="width:110px;"><p>사용자 매뉴얼</p></div>
                     <input type="hidden" id="userInfo" value="${loginInfo.USER_ID}"></input>
                 </div>
                 <div class="bottomMenuDiv">
@@ -276,9 +276,9 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">생년월일</th>
-                                    <td><input type="text" id="WORKER_BIRTHDAY" name="WORKER_BIRTHDAY" placeholder="YYYYMMDD"></input></td>
+                                    <td><input type="text" id="WORKER_BIRTHDAY" name="WORKER_BIRTHDAY" placeholder="YYYYMMDD" maxlength="8"></input></td>
                                     <th scope="row">전화번호</th>
-                                    <td><input type="text" id="WORKER_PHONE" name="WORKER_PHONE" placeholder="- 빼고 숫자만 입력"></input></td>
+                                    <td><input type="text" id="WORKER_PHONE" name="WORKER_PHONE" placeholder="- 빼고 숫자만 입력" maxlength="11"></input></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">작업자 정보</th>

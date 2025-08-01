@@ -193,7 +193,7 @@
                     <div class="login"><p>${loginInfo.USER_NAME}님</p></div>
                     <div class="logout"><p>로그아웃</p></div>
                     <div class="mypage"><p>마이페이지</p></div>
-                    <div class="help"><p>도움말</p></div>
+                    <div class="help" style="width:110px;"><p>사용자 매뉴얼</p></div>
                     <input type="hidden" id="userInfo" value="${loginInfo.USER_ID}"></input>
                 </div>
                 <div class="bottomMenuDiv">

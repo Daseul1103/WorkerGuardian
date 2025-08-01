@@ -38,6 +38,13 @@
 		insert into user_info(USER_ID,USER_PW,USER_NAME,USER_PHONE,ORG_ID,REG_DATE)
 		values(#{USER_ID},#{USER_PW},#{USER_NAME},#{USER_PHONE},#{ORG_ID},NOW())
 	</insert>
+	
+	
+	<!-- 로그인 접속 기록 등록하기 -->
+	<insert id="insertLoginTime" parameterType="java.lang.String">
+		insert into login_timetable (USER_ID, LOGIN_TIME)
+		values(#{userId}, NOW())
+	</insert>
 
 
 </mapper>

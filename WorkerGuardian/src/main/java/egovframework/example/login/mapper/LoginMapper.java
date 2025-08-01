@@ -22,4 +22,7 @@ public interface LoginMapper {
     // 회원가입 정보 저장
     void joinSave(LoginVO loginVO) throws Exception;
     
+    // 로그인 접속 시간 등록
+    void insertLoginTime(String userId) throws Exception;
+    
 }

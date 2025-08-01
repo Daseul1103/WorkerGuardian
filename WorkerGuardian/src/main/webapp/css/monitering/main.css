@@ -53,7 +53,7 @@
             width: 8%;
             height: 70%;
             margin-left: 5%;
-            background-image: url('/images/logo.png');
+            background-image: url('/images/wglogo.png');
             background-size: contain;         
             background-repeat: no-repeat;  
 
@@ -174,7 +174,7 @@
 
         
         .beaconImg {
-        	background-image: url('/images/beacon.png');
+        	background-image: url('/images/wifi.gif');
         	background-size: contain;         
             background-repeat: no-repeat; 
             

@@ -21,4 +21,16 @@
 		select * from user_info
 		where user_id = #{USER_ID}
 	</select>
+	
+	
+	
+	<!-- 로그인 시 최근 접속 시간 가져오기 -->
+	<select id="loginTimeList" parameterType="java.lang.String" resultType="egovframework.example.mypage.vo.MypageVO">
+		SELECT *
+		FROM login_timetable
+		WHERE user_id = #{userId}
+		ORDER BY login_time DESC
+		LIMIT 1 OFFSET 1
+	</select>
+	
 </mapper>

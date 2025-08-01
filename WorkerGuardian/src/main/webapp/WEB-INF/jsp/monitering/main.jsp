@@ -123,15 +123,13 @@
 		            	$('#siteTitle').text(siteName);
 		            	
 		            	
-		            	if(workername.length <= 0) {
+		            	if(workername.length <= 0 || workername == null) {
 		            		return false;
 		            	} else {
 		            		// 이후 작업 진행 - 비콘 정보 배열 사용해서 랜덤으로 안내 메세지 뜨게하는 함수 실행하기
 				            interval = setInterval(function() { randomAlram( beaconId,beaconName,siteId ) }, 15000);
 		            	}
-		            	
-		            	
-		            		            	
+    		            	
 				    },
 				    error: function(xhr, status, error) {
 				        console.log('ajax 요청에 문제가 있습니다.', error);
@@ -139,136 +137,7 @@
 				});
 	        });
 	        
-	        // 알람 띄우기 전 사전 작업 함수
-	        function randomAlram(beaconId, beaconName ,siteId) {
-	        	
-	        	// 받아온 데이터가 있는지 확(비어 있는지)
-	        	if (!beaconId.length || !beaconName.length) {
-			        /* console.log("비콘 정보가 없습니다."); */
-			        return false;
-			    } else {
-			    	if (beaconId.length !== beaconName.length) { // 길이가 다르면 안됨
-			            /* console.log("비콘 ID와 이름 배열 길이가 다릅니다."); */
-			            return false;
-			        } else {
-			        	/* console.log("길이 같음"); */
-			        	var arrayLength = beaconId.length;
-			        	var randomIndex = Math.floor(Math.random() * arrayLength);  // 비콘 고르기 전용 랜덤 변수
-						
-			        	var now = new Date();  // 날짜 변수
-
-		            	 var yy = String(now.getFullYear()).slice(2); // 날짜 변수
-		            	 var mm = String(now.getMonth() + 1).padStart(2, '0'); // 날짜 변수
-		            	 var dd = String(now.getDate()).padStart(2, '0'); // 날짜 변수
-
-		            	 var hh = String(now.getHours()).padStart(2, '0'); // 날짜 변수
-		            	 var min = String(now.getMinutes()).padStart(2, '0'); // 날짜 변수
-		            	 var ss = String(now.getSeconds()).padStart(2, '0'); // 날짜 변수
-
-		            	 var currentDateTime = yy + '/' + mm + '/' + dd + ' ' + hh + ':' + min + ':' + ss; // 날짜 변수
-		            	 
-		            	 var workerLength = workername.length;
-		            	 var workerIndex = Math.floor(Math.random() * workerLength); // 0~5 까지 출력 - 작업자 뽑기 전용 랜덤 변수
-		            	 var accidentIndex = Math.floor(Math.random() * 3); // 0~2 까지 출력 - 사고 뽑기 전용 랜덤 변수
-			        	
-		            	 // 알림 만들어서 띄워주는 함수
-		            	 makeAlram(randomIndex,workerIndex,accidentIndex,currentDateTime,siteId);
-			        	
-			        }
-			    }
-	        	
-	        	
-	        	function makeAlram(randomIndex,workerIndex,accidentIndex,currentDateTime,siteId) {
-	        		
-	        		var dOrgId = orgId;
-        	 		  var dSiteId = siteId;
-        	 		  var dBeaconId = beaconId[randomIndex];
-        	 		  var dWorkerId = workerid[workerIndex];
-        	 		  var dEventType = '';
-        	 		  
-        	 		  
-        	 		  if(accidentIndex == 0) {
-        	 			dEventType = "F";
-        	 		  } else if(accidentIndex == 1) {
-        	 			dEventType = "G";
-        	 		  } else {
-        	 			dEventType = "D";
-        	 		  }
-        	 		 
-        	 		  
-        	 		$.ajax({
-  				    url: "/main/insertTestData.ajax",
-  				    data: {
-  				        "ORG_ID" : dOrgId,
-  				        "SITE_ID" : dSiteId,
-  				        "UUID" : dBeaconId,
-  				        "WORKER_ID" : dWorkerId,
-  				        "EVENT_TYPE" : dEventType,
-  				        "EVENT_TIME" : currentDateTime
-  				    },
-  				    success: function(data) {
-  				    	console.log("ajax 성공");
-  				    },    				    
-  				    error: function(xhr, status, error) {
-  				        console.log('ajax 요청에 문제가 있습니다.', error);
-  				    }
-  				    
-        	 		});
-        	 		
-        	 		
-        	 		
-	        		// 알림 생성하기 (고쳐야됨)
-	        		
-	        		var inputText = 
-          	 		  '<div id="beaconAlram' + ringVal + '">' +
-          	 		    '<div class="alramTitle">' +
-          	 		      '<div class="titleDiv">' +
-          	 		        '<div class="alramTitleBig">' +
-          	 		          '<h2 style="margin: 0;">알림</h2>' +
-          	 		        '</div>' +
-          	 		        '<div class="alramDate">' +
-          	 		          currentDateTime +
-          	 		        '</div>' +
-          	 		      '</div>' +
-          	 		      '<div class="areaLineDiv">' +
-          	 		      '</div>' +
-          	 		    '</div>' +
-
-          	 		    '<div class="alramContent">' +
-          	 		      '<p style="margin-left: 40px;">' + workername[workerIndex] + ' 작업자</p>' +
-          	 		      '<p style="margin: 0; margin-left: 40px;"> ' + beaconName[randomIndex]  + '에서 ' + accident[accidentIndex] + ' 사고 발생</p>' +
-          	 		    '</div>' +
-
-          	 		    '<div class="alramBtn">' +
-          	 		      '<button id="alramBtn' + ringVal + '" style="margin-bottom: 20px;">확인</button>' +
-          	 		    '</div>' +
-          	 		  '</div>';
-          	 		  
-          	 		  
-          	 		  // 알림함에 알림 넣기 (만들어야 됨)
-          	 		  var highlightedId = $(".site-item.highlight").attr("id");
-          	 		  var highlightedSiteName = null;
-          	 		  
-          	 		  siteList.forEach(function(site) {
-						    if (site.site_ID === highlightedId) {
-						       highlightedSiteName = site.site_NAME;
-						    }
-						});
-          	 		  
-          	 		  var alramText = '<div class="alram-item">' +
-		          	    '<div class="alram-item-date">' + highlightedSiteName +  " - "+ currentDateTime + '</div>' +
-		          	    '<p>' + workername[workerIndex] + ' 작업자 ' + beaconName[randomIndex] + '에서 ' + accident[accidentIndex] + ' 사고 발생</p>' +
-		          	  	'</div>';
-          	  	
-          	 		  // text input 하기
-          	 		  $("#" + beaconId[randomIndex]).append(inputText); // 비콘에 알람 띄우기
-          	 		  $('.alramMenu').prepend(alramText); // 알림함에 띄우기
-          	 		  
-          	 		  // 알림 인덱스 증가 시키기
-          	 		  ringVal = ringVal + 1; 
-          	 		  
-	        	}
-	        }
+	        
 	        
 	     	// 도움말 파일 다운로드하기
             $('.help').on('click', function() {
@@ -287,6 +156,138 @@
 	        
 	
 	    });
+	    
+	    
+	 // 알람 띄우기 전 사전 작업 함수
+        function randomAlram(beaconId, beaconName ,siteId) {
+        	
+        	// 받아온 데이터가 있는지 확(비어 있는지)
+        	if (!beaconId.length || !beaconName.length) {
+		        /* console.log("비콘 정보가 없습니다."); */
+		        return false;
+		    } else {
+		    	if (beaconId.length !== beaconName.length) { // 길이가 다르면 안됨
+		            /* console.log("비콘 ID와 이름 배열 길이가 다릅니다."); */
+		            return false;
+		        } else {
+		        	/* console.log("길이 같음"); */
+		        	var arrayLength = beaconId.length;
+		        	var randomIndex = Math.floor(Math.random() * arrayLength);  // 비콘 고르기 전용 랜덤 변수
+					
+		        	var now = new Date();  // 날짜 변수
+
+	            	 var yy = String(now.getFullYear()).slice(2); // 날짜 변수
+	            	 var mm = String(now.getMonth() + 1).padStart(2, '0'); // 날짜 변수
+	            	 var dd = String(now.getDate()).padStart(2, '0'); // 날짜 변수
+
+	            	 var hh = String(now.getHours()).padStart(2, '0'); // 날짜 변수
+	            	 var min = String(now.getMinutes()).padStart(2, '0'); // 날짜 변수
+	            	 var ss = String(now.getSeconds()).padStart(2, '0'); // 날짜 변수
+
+	            	 var currentDateTime = yy + '/' + mm + '/' + dd + ' ' + hh + ':' + min + ':' + ss; // 날짜 변수
+	            	 
+	            	 var workerLength = workername.length;
+	            	 var workerIndex = Math.floor(Math.random() * workerLength); // 0~5 까지 출력 - 작업자 뽑기 전용 랜덤 변수
+	            	 var accidentIndex = Math.floor(Math.random() * 3); // 0~2 까지 출력 - 사고 뽑기 전용 랜덤 변수
+		        	
+	            	 // 알림 만들어서 띄워주는 함수
+	            	 makeAlram(randomIndex,workerIndex,accidentIndex,currentDateTime,siteId);
+		        	
+		        }
+		    }
+        	
+        	
+        	function makeAlram(randomIndex,workerIndex,accidentIndex,currentDateTime,siteId) {
+        		
+        		var dOrgId = orgId;
+    	 		  var dSiteId = siteId;
+    	 		  var dBeaconId = beaconId[randomIndex];
+    	 		  var dWorkerId = workerid[workerIndex];
+    	 		  var dEventType = '';
+    	 		  
+    	 		  
+    	 		  if(accidentIndex == 0) {
+    	 			dEventType = "F";
+    	 		  } else if(accidentIndex == 1) {
+    	 			dEventType = "G";
+    	 		  } else {
+    	 			dEventType = "D";
+    	 		  }
+    	 		 
+    	 		  
+    	 		$.ajax({
+				    url: "/main/insertTestData.ajax",
+				    data: {
+				        "ORG_ID" : dOrgId,
+				        "SITE_ID" : dSiteId,
+				        "UUID" : dBeaconId,
+				        "WORKER_ID" : dWorkerId,
+				        "EVENT_TYPE" : dEventType,
+				        "EVENT_TIME" : currentDateTime
+				    },
+				    success: function(data) {
+				    	console.log("ajax 성공");
+				    },    				    
+				    error: function(xhr, status, error) {
+				        console.log('ajax 요청에 문제가 있습니다.', error);
+				    }
+				    
+    	 		});
+    	 		
+    	 		
+    	 		
+        		// 알림 생성하기 (고쳐야됨)
+        		
+        		var inputText = 
+      	 		  '<div id="beaconAlram' + ringVal + '">' +
+      	 		    '<div class="alramTitle">' +
+      	 		      '<div class="titleDiv">' +
+      	 		        '<div class="alramTitleBig">' +
+      	 		          '<h2 style="margin: 0;">알림</h2>' +
+      	 		        '</div>' +
+      	 		        '<div class="alramDate">' +
+      	 		          currentDateTime +
+      	 		        '</div>' +
+      	 		      '</div>' +
+      	 		      '<div class="areaLineDiv">' +
+      	 		      '</div>' +
+      	 		    '</div>' +
+
+      	 		    '<div class="alramContent">' +
+      	 		      '<p style="margin-left: 40px;">' + workername[workerIndex] + ' 작업자</p>' +
+      	 		      '<p style="margin: 0; margin-left: 40px;"> ' + beaconName[randomIndex]  + '에서 ' + accident[accidentIndex] + ' 사고 발생</p>' +
+      	 		    '</div>' +
+
+      	 		    '<div class="alramBtn">' +
+      	 		      '<button id="alramBtn' + ringVal + '" style="margin-bottom: 20px;">확인</button>' +
+      	 		    '</div>' +
+      	 		  '</div>';
+      	 		  
+      	 		  
+      	 		  // 알림함에 알림 넣기 (만들어야 됨)
+      	 		  var highlightedId = $(".site-item.highlight").attr("id");
+      	 		  var highlightedSiteName = null;
+      	 		  
+      	 		  siteList.forEach(function(site) {
+					    if (site.site_ID === highlightedId) {
+					       highlightedSiteName = site.site_NAME;
+					    }
+					});
+      	 		  
+      	 		  var alramText = '<div class="alram-item">' +
+	          	    '<div class="alram-item-date">' + highlightedSiteName +  " - "+ currentDateTime + '</div>' +
+	          	    '<p>' + workername[workerIndex] + ' 작업자 ' + beaconName[randomIndex] + '에서 ' + accident[accidentIndex] + ' 사고 발생</p>' +
+	          	  	'</div>';
+      	  	
+      	 		  // text input 하기
+      	 		  $("#" + beaconId[randomIndex]).append(inputText); // 비콘에 알람 띄우기
+      	 		  $('.alramMenu').prepend(alramText); // 알림함에 띄우기
+      	 		  
+      	 		  // 알림 인덱스 증가 시키기
+      	 		  ringVal = ringVal + 1; 
+      	 		  
+        	}
+        }
     </script>
 </head>
 <body>
@@ -298,7 +299,7 @@
                     <div class="login"><p>${loginInfo.USER_NAME}님</p></div>
                     <div class="logout"><p>로그아웃</p></div>
                     <div class="mypage"><p>마이페이지</p></div>
-                    <div class="help"><p>도움말</p></div>
+                    <div class="help" style="width:110px;"><p>사용자 매뉴얼</p></div>
                     <input type="hidden" id="userInfo" value="${loginInfo.USER_ID}"></input>
                 </div>
                 <div class="bottomMenuDiv">
