@@ -14,7 +14,17 @@
 	
 	<script>
 	  $(document).ready(function() {
-		  
+		
+/* 		// 검색 조건 기본 날짜 초기화 작업
+		var today = new Date();
+		var yyyy = today.getFullYear();
+		var mm = String(today.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작
+		var dd = String(today.getDate()).padStart(2, '0');
+		var formattedDate = yyyy + '-' + mm + '-' + dd;
+
+		$('#start_date').val(formattedDate);
+		$('#end_date').val(formattedDate); */
+			 
 		 // 엑셀 파일 다운로드 버튼 클릭 함수
 	    $('.fileDownBtn').on('click', function() {
 	    	searchFrm.action = '/safetyEvent/ExcellDownLoad.do';
@@ -55,10 +65,14 @@
      		} else if (startDate == "" && endDate != "") {
      			alert("시작일을 입력해 주세요.");
      			return false;
+     		} else if(startDate == "" && endDate == "") {
+     			alert("조회 기간을 입력해 주세요.");
+     			return false;
      		} else if(start > end) {
      			alert("종료일이 시작일보다 먼저일 수 없습니다.");
      			return false;
      		} else {
+     			searchFrm.action = '/safeevent/safeEvent.do';
      			searchFrm.submit();
      		}
      		
@@ -149,11 +163,34 @@
                                     <th style="border:none; background:none; text-align:left;"> <h4 style="margin: 0;">조회 기간</h4></th>
                                     <td>
                                         <div class="date_div">
-										    <input type="date" name="start_date" id="start_date"  style="margin-left: 40px; margin-right: 20px;"
-										        <c:if test="${not empty searchType.start_date}">value="${searchType.start_date}"</c:if>>
+										    <c:choose>
+										        <c:when test="${not empty searchType.start_date}">
+										            <input type="date" name="start_date" id="start_date"
+										                   style="margin-left: 40px; margin-right: 20px;"
+										                   value="${searchType.start_date}" />
+										        </c:when>
+										        <c:otherwise>
+										            <input type="date" name="start_date" id="start_date"
+										                   style="margin-left: 40px; margin-right: 20px;"
+										                   value="${today}" />
+										        </c:otherwise>
+										    </c:choose>
+										
 										    ~
-										    <input type="date" name="end_date" id="end_date" style="margin-left: 20px; margin-right: 5px;"
-										        <c:if test="${not empty searchType.end_date}">value="${searchType.end_date}"</c:if>>
+										
+										    <c:choose>
+										        <c:when test="${not empty searchType.end_date}">
+										            <input type="date" name="end_date" id="end_date"
+										                   style="margin-left: 20px; margin-right: 5px;"
+										                   value="${searchType.end_date}" />
+										        </c:when>
+										        <c:otherwise>
+										            <input type="date" name="end_date" id="end_date"
+										                   style="margin-left: 20px; margin-right: 5px;"
+										                   value="${today}" />
+										        </c:otherwise>
+										    </c:choose>
+										
 										    <button class="searchBtn"> </button>
 										</div>
                                     </td>

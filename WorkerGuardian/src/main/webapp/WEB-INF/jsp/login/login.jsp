@@ -88,17 +88,7 @@
                 <div class="menu1" style="color: white; font-size: 16px;">로그인</div>
             </div>
         </div>
-        <div class="login_div">
-            <div class="side_menu_div">
-                <ul>
-                    <li>
-                        <a href='/login/login.do'>로그인</a>
-                    </li>
-                    <li>
-                        <a href='/login/join.do'>회원가입</a>
-                    </li>
-                </ul>
-            </div>
+        <div class="login_div">            
             <div class="login_main_div">
                 <div class="title_div">
                     <p style="font-size: 42px; margin: 0;">로그인</p>

@@ -32,11 +32,7 @@
 	                console.log('ajax 요청에 문제가 있습니다.', error);
 	            }
 	        });
-	
-	        /* var org_id = $('#org_id').val();
-	        let interval;
-	
-	        */
+
 	        var ringVal = 1;
 	        
 	        var orgId;
@@ -58,8 +54,7 @@
 	
 	        // 현장 클릭 시 함수 
 	        $(document).on('click', '.site-item', function() {
-	            console.log("현장 클릭");
-	            
+
 	            // 기존의 클릭 스타일 지우고, 클릭 된 현장에 클릭 스타일 적용
 	            $('.site-item').removeClass('highlight');
 	            $(this).addClass('highlight');
@@ -80,8 +75,7 @@
 				    url: "/main/selectBeaconInfo.ajax",
 				    data: { "siteId": siteId },
 				    success: function(data) {
-				        console.log("ajax 성공");
-				
+
 				        var backgroundVal = data.background;
 				        var beaconInfoList = data.BeaconInfoList;
 				        var workerInfoList = data.workerInfoList;

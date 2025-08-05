@@ -39,4 +39,13 @@ public class MypageServiceImpl implements MypageService {
     public MypageVO loginTimeList(String userId) throws Exception {
     	return mypageMapper.loginTimeList(userId);
     }
+    
+    
+    // 마이페이지 본인 확인
+    @Override
+    public List<LoginVO> identityPw(LoginVO vo) throws Exception {
+    	return mypageMapper.identityPw(vo);
+    }
+    
+    
 }

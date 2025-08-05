@@ -79,6 +79,11 @@ public class LoginController {
         ModelAndView mav = new ModelAndView("jsonView"); // ModelAndView 객체 생성
         
         httpSession.removeAttribute("LoginInfo"); // 세션에 저장된 로그인 정보 삭제
+
+        if(httpSession.getAttribute("IdentityInfo") != null) { // 마이페이지 본인 확인 정보 삭제
+        	httpSession.removeAttribute("IdentityInfo");
+        }
+        
         mav.setViewName("redirect:/login/login.do"); // 로그인 화면(첫 진입 화면)으로 이동
         
         return mav;

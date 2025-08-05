@@ -96,6 +96,7 @@
 			event.preventDefault(); //우선 폼 제출 막기
 
 			var password = $('#USER_PW').val();
+			var passwordchk = $('#USER_PW_CHK').val();
 			var userName = $('#USER_NAME').val();
 			var phone = $('#USER_PHONE').val();
 			
@@ -107,6 +108,9 @@
 				return false;
 			} else if(password.length > 15 || password.length < 8) {
 				alert("비밀번호는 영문/숫자/특수문자를 포함하여 8~15자 이내로 입력해야 합니다.");
+				return false;
+			} else if(passwordchk != password) {
+				alert("비밀번호와 비밀번호 확인이 일치하지 않습니다. 다시 확인해 주세요.");
 				return false;
 			} else if(userName == "") {
 				alert("사용자 이름을 입력해 주세요.");
@@ -191,17 +195,9 @@
                 <div class="menu1" style="color: white; font-size: 16px;">회원가입</div>
             </div>
         </div>
+        <div>
+        </div>
         <div class="login_div">
-            <div class="side_menu_div">
-                <ul>
-                    <li>
-                        <a href='/login/login.do'>로그인</a>
-                    </li>
-                    <li>
-                        <a href='/login/join.do'>회원가입</a>
-                    </li>
-                </ul>
-            </div>
             <div class="login_main_div">
                 <div class="title_div">
                     <p style="font-size: 42px; margin: 0;">회원가입</p>
@@ -214,13 +210,17 @@
                             <p style="margin: 0; font-weight: bold; margin-bottom: 5px;">아이디</p>
                         </div>
                         <div class="idDivBox" style="display:flex;">
-	                        <input type="text" id="USER_ID" name="USER_ID" placeholder="아이디를 입력하세요." style="width:240px; margin-right:10px;" maxlength="15"> 
+	                        <input type="text" id="USER_ID" name="USER_ID" placeholder="영문/숫자 포함 15자 이내" style="width:240px; margin-right:10px;" maxlength="15"> 
 	                        <button id="dupliBtn">중복 확인</button>
                         </div>
                         <div class="pwBox">
                             <p style="margin: 0; font-weight: bold; margin-bottom: 5px;">비밀번호</p>
                         </div>
-                        <input type="password" id="USER_PW"  name="USER_PW"  placeholder="비밀번호를 입력하세요." maxlength="15">
+                        <input type="password" id="USER_PW"  name="USER_PW"  placeholder="영문/숫자/특수문자 포함 15자 이내" maxlength="15">
+                        <div class="pwBox">
+                            <p style="margin: 0; font-weight: bold; margin-bottom: 5px;">비밀번호 확인</p>
+                        </div>
+                        <input type="password" id="USER_PW_CHK" placeholder="영문/숫자/특수문자 포함 15자 이내" maxlength="15">
                         <div class="idBox">
                             <p style="margin: 0; font-weight: bold; margin-bottom: 5px;">이름</p>
                         </div>
@@ -237,8 +237,9 @@
                         <button id="orgBtn">회사 확인</button>
                         </div>
                         <button class="loginBtn">
-                            회원가입
+                           	 회원가입
                         </button>
+                        <p style="color: #ccc; font-size: 14px; margin-left: 28%; cursor: pointer;"><a href='/login/login.do' style="color: #ccc;">이미 계정이 있으신가요? | 로그인</a></p>
                     </div>
                 </div>
             </form>

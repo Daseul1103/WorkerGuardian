@@ -33,4 +33,12 @@
 		LIMIT 1 OFFSET 1
 	</select>
 	
+	
+	<!-- 마이페이지 본인확인 -->
+	<select id="identityPw" parameterType="egovframework.example.login.vo.LoginVO" resultType="egovframework.example.login.vo.LoginVO">
+		select * from user_info
+		where user_id = #{USER_ID}
+		and user_pw = #{USER_PW}
+	</select>
+	
 </mapper>

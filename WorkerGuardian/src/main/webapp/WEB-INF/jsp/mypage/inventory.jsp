@@ -100,8 +100,13 @@
                         <p id="site_title" style="font-size: 35px; font-weight: bold; margin: 0;">내 정보</p>
                     </div>
                     <div class="breadcrumb" style="margin-right:0px;">
-						<div>사용자 최근 접속 시간 : ${loginTimeList.LOGIN_TIME}</div>
-                    </div>
+					    <c:if test="${not empty loginTimeList}">
+					        <div>사용자 최근 접속 시간 : ${loginTimeList.LOGIN_TIME}</div>
+					    </c:if>
+					    <c:if test="${empty loginTimeList}">
+					        <div> </div>
+					    </c:if>
+					</div>
                 </div>
                 <div class="main_content_div">
                     <div class="mini_title">

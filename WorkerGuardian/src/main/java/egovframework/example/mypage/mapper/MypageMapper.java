@@ -17,4 +17,7 @@ public interface MypageMapper {
     
     // 사용자 최근 접속 시간 가져오기
     MypageVO loginTimeList(String userId) throws Exception;
+    
+    // 마이페이지 본인 확인
+    List<LoginVO> identityPw(LoginVO vo) throws Exception;
 }
