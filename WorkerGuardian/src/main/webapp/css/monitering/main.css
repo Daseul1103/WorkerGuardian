@@ -132,7 +132,8 @@
         .sitemenu {
             width: 100%;
             height: auto;
-            overflow-y: auto;
+            /* overflow-y: auto; */
+            overflow-y: scroll;
             border: 1px solid #ccc;
             padding: 5px;
             background-color: #fff;
@@ -159,13 +160,14 @@
         }
 
         .site-item {
-        padding: 10px;
-        margin-bottom: 5px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        background-color: #fff;
-        font-size: 14px;
-        text-align: center;
+	        padding: 10px;
+	        margin-bottom: 5px;
+	        border: 1px solid #ccc;
+	        border-radius: 4px;
+	        background-color: #fff;
+	        font-size: 14px;
+	        text-align: center;
+	        pointer : cursor;
         }
 
         .site-item.highlight {

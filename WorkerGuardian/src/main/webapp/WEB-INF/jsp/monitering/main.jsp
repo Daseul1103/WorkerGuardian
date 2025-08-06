@@ -21,12 +21,19 @@
 	                siteList = data.siteList;
 	                var html = '';
 	
-	                siteList.forEach(function(site) {
+	                /* siteList.forEach(function(site) {
 	                    html += '<div id="' + site.site_ID + '" class="site-item">' + site.site_NAME + '</div>\n';
+	                }); */
+	                
+	                siteList.forEach(function(site, index) {
+	                    var highlightClass = index === 0 ? ' highlight' : '';
+	                    html += '<div id="' + site.site_ID + '" class="site-item' + highlightClass + '">' + site.site_NAME + '</div>\n';
 	                });
 	
 	                // 클래스명이 sitemenu인 요소 안에 삽입
 	                $('.sitemenu').html(html);
+	                
+	                $('.site-item').first().trigger('click');
 	            },
 	            error: function(xhr, status, error) {
 	                console.log('ajax 요청에 문제가 있습니다.', error);
