@@ -14,8 +14,8 @@ public class BeaconVO {
     private String SITE_NAME;      // 현장 이름
     private String REG_DATE;       // 비콘 등록일
     private int DANGER_DISTANCE;   // 비콘 위험 거리
-    private int BEACON_Y;          // 비콘 Y 값
-    private int BEACON_X;          // 비콘 X 값
+    private double BEACON_Y;          // 비콘 Y 값
+    private double BEACON_X;          // 비콘 X 값
     
     
     
@@ -73,16 +73,16 @@ public class BeaconVO {
 	public void setDANGER_DISTANCE(int dANGER_DISTANCE) {
 		DANGER_DISTANCE = dANGER_DISTANCE;
 	}
-	public int getBEACON_Y() {
+	public double getBEACON_Y() {
 		return BEACON_Y;
 	}
-	public void setBEACON_Y(int bEACON_Y) {
+	public void setBEACON_Y(double bEACON_Y) {
 		BEACON_Y = bEACON_Y;
 	}
-	public int getBEACON_X() {
+	public double getBEACON_X() {
 		return BEACON_X;
 	}
-	public void setBEACON_X(int bEACON_X) {
+	public void setBEACON_X(double bEACON_X) {
 		BEACON_X = bEACON_X;
 	}
     

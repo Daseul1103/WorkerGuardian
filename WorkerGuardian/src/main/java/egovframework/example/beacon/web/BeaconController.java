@@ -15,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import egovframework.example.beacon.service.BeaconService;
 import egovframework.example.beacon.vo.BeaconVO;
+import egovframework.example.login.vo.LoginVO;
+import egovframework.example.main.vo.MainVO;
 import egovframework.example.view.vo.ViewVO;
 
 @Controller
@@ -180,6 +182,38 @@ public class BeaconController {
             beaconService.updateBeacon(vo);
             mav.setViewName("redirect:/beacon/beaconDetail.do?uuid=" + uuid);  // 비콘 상세 화면으로 이동
         }
+        return mav;
+    }
+    
+    
+    
+    @RequestMapping(value="/beacon/selectBeaconInfo.do")
+    public ModelAndView selectSiteInfo(
+        @RequestParam("siteId") String siteId,
+        HttpSession httpSession,
+        HttpServletRequest request,
+        Model model
+    ) throws Exception {
+        ModelAndView mav = new ModelAndView("jsonView"); // ModelAndView 객체 생성
+
+        // 로그인 세션 확인하기
+        if (httpSession.getAttribute("LoginInfo") == null) {
+            mav.setViewName("redirect:/login/notSession.do"); // 로그인 세션 없는 경우 강제 로그아웃
+        } else {
+            MainVO background = beaconService.backgroundInfo(siteId);
+            
+            LoginVO loginInfo = (LoginVO) httpSession.getAttribute("LoginInfo");
+            String orgId = loginInfo.getORG_ID();
+            
+            String siteIdVal = background.getSITE_ID();
+            String fileNameVal = background.getFILE_NAME();
+            
+            mav.addObject("siteIdVal", siteIdVal);
+            mav.addObject("fileNameVal", fileNameVal);
+            mav.addObject("OrgId", orgId); // 회사 id
+            mav.setViewName("/beacon/locationSelect");
+        }
+
         return mav;
     }
     

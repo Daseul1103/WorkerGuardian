@@ -53,5 +53,10 @@
 		BEACON_NAME = #{BEACON_NAME}
 		where uuid = #{UUID}
 	</update>
+	
+	<select id="backgroundInfo" parameterType="java.lang.String" resultType="egovframework.example.main.vo.MainVO">
+    	select * from site_file_info
+    	where site_id = #{siteId}
+    </select>
 
 </mapper>

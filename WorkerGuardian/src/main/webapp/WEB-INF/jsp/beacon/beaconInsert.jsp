@@ -69,8 +69,10 @@
 			    if (selectedValue === 'Y') {
 			        // Y인 경우 모두 활성화 (입력 가능)
 			        $('#SITE_ID, #DANGER_DISTANCE, #BEACON_X, #BEACON_Y').prop('disabled', false);
+			        $('#beaconLocationBtn').css("display","block");
 			    } else {
 			    	$('#SITE_ID').val('none').prop('disabled', true);
+			    	$('#beaconLocationBtn').css("display", "none");
 
 			        // input text 요소는 값 비우고 비활성화
 			        $('#DANGER_DISTANCE, #BEACON_X, #BEACON_Y')
@@ -115,6 +117,14 @@
             	var uuid = $('#UUID').val();
             	var major = $('#MAJOR').val();
             	var minor = $('#MINOR').val();
+            	var limit = $('.limit_flag').val();
+            	var yval = $('#BEACON_Y').val();
+            	var xval = $('#BEACON_X').val();
+            	var site = $('#SITE_ID').val();
+            	var danger = $('#DANGER_DISTANCE').val();
+            	
+            	
+            	console.log("유효성");
             	
             	if(beacon_name == "") {
             		alert("비콘 이름을 입력해 주세요.");
@@ -128,7 +138,17 @@
             	} else if(minor == "") {
             	 	alert("Minor 값을 입력해 주세요.");
             	 	return false;
-            	} else {
+            	} else if(limit == 'Y' && site == 'none') {
+            		alert("적용 현장을 선택해 주세요.");
+            		return false;           
+            	} else if(limit === 'Y' && (!yval || yval.trim() === '') && (!xval || xval.trim() === '')) {
+            		alert("비콘 위치를 선택해 주세요.");
+        			return false;
+            	} else if(limit == 'Y' && danger == '') {
+            		alert("비콘 위험거리를 설정해 주세요.");
+            		return false;
+            	}  
+            	else {
             		var check = confirm("이대로 등록합니까?");
             		
             		if(check == true) {
@@ -192,7 +212,64 @@
 	     	        $(this).val(onlyNumbers);
 	     	    }
 	     	});
+	     	
+	     	
+	     	// 비콘 위치 선택 버튼 클릭
+	     	$('#beaconLocationBtn').on('click', function() {
+	     		var siteId = $('#SITE_ID').val();
+
+	     		if(siteId == "none") {
+	     			alert("비콘의 위치 선택을 위해 적용 현장을 선택해 주세요.");
+	     			return false;
+	     		} else {
+	     			// 모달창 열기 + 현장 아이디 옮기기
+	     			var url = '/beacon/selectBeaconInfo.do?siteId='+siteId;
+	     			var childWindow = window.open(
+	     					url,      
+	     			        "비콘 위치 선택", 
+	     			        "width=800,height=600,scrollbars=yes,resizable=yes"
+	     			    );
+	     		}
+	     	});
+	     	
+	     	
+	     	$('#siteSelect').on('change', function() {
+	     	    var yval = $('#BEACON_Y').val();
+	        	var xval = $('#BEACON_X').val();
+	        	
+	        	if(yval != "" || xval != "") {
+	        		$('#BEACON_Y').val("");
+	        		$('#BEACON_X').val("");
+	        		
+	        		var yval2 = $('#BEACON_Y').val();
+	        		var xval2 = $('#BEACON_X').val();
+
+	        	}
+	     	    
+	     	});
+
         });
+        
+        
+        function receiveCoords(x, y) {
+   		  
+        	// 음수 값인 경우 값 보정하기
+        	if(y < 0) {
+        		y = 0;
+        	} else if(x < 0){
+        		x = 0;
+        	}
+        	
+        	$('#BEACON_X').val(x);
+        	$('#BEACON_Y').val(y);
+        	
+        	var yval = $('#BEACON_Y').val();
+        	var xval = $('#BEACON_X').val();
+        	
+        	console.log("Y:" +yval);
+        	console.log("X:" +xval);
+        	
+   		}
     </script>
 </head>
 <body>
@@ -309,13 +386,16 @@
                                     <td><input type="text" id="DANGER_DISTANCE" name="DANGER_DISTANCE" style="margin-right:10px;" disabled/>m</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">비콘 X축 위치</th>
-                                    <td><input type="text" id="BEACON_X" name="BEACON_X" style="margin-right:10px;" disabled/>%</td>
+                                    <th scope="row">비콘 위치</th>
+                                    <td colspan="3"><button id="beaconLocationBtn" type="button" style="display:none;">위치 선택</button></td>
+<!--                                     <td><input type="text" id="BEACON_X" name="BEACON_X" style="margin-right:10px;" disabled/>%</td>
                                     <th scope="row">비콘 Y축 위치</th>
-                                    <td><input type="text" id="BEACON_Y" name="BEACON_Y" style="margin-right:10px;" disabled/>%</td>
+                                    <td><input type="text" id="BEACON_Y" name="BEACON_Y" style="margin-right:10px;" disabled/>%</td> -->
                                 </tr>
                             </tbody>
                         </table>
+                         <input type="hidden" id="BEACON_X" name="BEACON_X"/>
+                         <input type="hidden" id="BEACON_Y" name="BEACON_Y"/>
                      </form>   
                     </div>
                 </div>

@@ -101,15 +101,17 @@
             });
             
             
-         // 제한 구역 적용에 따른 적용 현장 선택 막기
-        $('.limit_flag').on('click', function() {
+            // 제한 구역 적용에 따른 적용 현장 선택 막기
+        	$('.limit_flag').on('click', function() {
 			    var selectedValue = $('input[name="LIMIT_FLAG"]:checked').val();
 			
 			    if (selectedValue === 'Y') {
 			        // Y인 경우 모두 활성화 (입력 가능)
 			        $('#SITE_ID, #DANGER_DISTANCE, #BEACON_X, #BEACON_Y').prop('disabled', false);
+			        $('#beaconLocationBtn').css("display","block");
 			    } else {
 			    	$('#SITE_ID').val('none').prop('disabled', true);
+			    	$('#beaconLocationBtn').css("display", "none");
 
 			        // input text 요소는 값 비우고 비활성화
 			        $('#DANGER_DISTANCE, #BEACON_X, #BEACON_Y')
@@ -180,8 +182,66 @@
 	     	        $(this).val(onlyNumbers);
 	     	    }
 	     	});
+	     	
+	     	
+	     	
+	     	// 비콘 위치 선택 버튼 클릭
+	     	$('#beaconLocationBtn').on('click', function() {
+	     		var siteId = $('#SITE_ID').val();
+
+	     		if(siteId == "none") {
+	     			alert("비콘의 위치 선택을 위해 적용 현장을 선택해 주세요.");
+	     			return false;
+	     		} else {
+	     			// 모달창 열기 + 현장 아이디 옮기기
+	     			var url = '/beacon/selectBeaconInfo.do?siteId='+siteId;
+	     			var childWindow = window.open(
+	     					url,      
+	     			        "비콘 위치 선택", 
+	     			        "width=800,height=600,scrollbars=yes,resizable=yes"
+	     			    );
+	     		}
+	     	});
             
+	     	
+	     	
+	     	
+	     	$('#siteSelect').on('change', function() {
+	     	    var yval = $('#BEACON_Y').val();
+	        	var xval = $('#BEACON_X').val();
+	        	
+	        	if(yval != "" || xval != "") {
+	        		$('#BEACON_Y').val("");
+	        		$('#BEACON_X').val("");
+	        		
+	        		var yval2 = $('#BEACON_Y').val();
+	        		var xval2 = $('#BEACON_X').val();
+
+	        	}
+	     	    
+	     	});
+	     	
         });
+        
+        
+        function receiveCoords(x, y) {
+
+        	if(y < 0) {
+        		y = 0;
+        	} else if(x < 0){
+        		x = 0;
+        	}
+        	
+        	$('#BEACON_X').val(x);
+        	$('#BEACON_Y').val(y);
+        	
+        	var yval = $('#BEACON_Y').val();
+        	var xval = $('#BEACON_X').val();
+        	
+        	console.log("Y:" +yval);
+        	console.log("X:" +xval);
+        	
+   		}
     </script>
 </head>
 <body>
@@ -295,13 +355,22 @@
                                     <td><input type="text" id="DANGER_DISTANCE" name="DANGER_DISTANCE" style="margin-right:10px;"  value="${data.DANGER_DISTANCE}" disabled/>m</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">비콘 X축 위치</th>
-                                    <td><input type="text" id="BEACON_X" name="BEACON_X" style="margin-right:10px;" value="${data.BEACON_X}" disabled/>%</td>
-                                    <th scope="row">비콘 Y축 위치</th>
-                                    <td><input type="text" id="BEACON_Y" name="BEACON_Y" style="margin-right:10px;" value="${data.BEACON_Y}" disabled/>%</td>
+                                    <th scope="row">비콘 위치</th>
+                                    <td colspan="3">
+									    <c:choose>
+									        <c:when test="${data.LIMIT_FLAG == 'Y'}">
+									            <button id="beaconLocationBtn" type="button">위치 선택</button>
+									        </c:when>
+									        <c:otherwise>
+									            <button id="beaconLocationBtn" type="button" style="display:none;">위치 선택</button>
+									        </c:otherwise>
+									    </c:choose>
+									</td>
                                 </tr>
                             </tbody>
                         </table>
+                         <input type="hidden" id="BEACON_X" name="BEACON_X" value="${data.BEACON_X}"/>
+                         <input type="hidden" id="BEACON_Y" name="BEACON_Y" value="${data.BEACON_Y}"/>
                      </form>   
                     </div>
                 </div>

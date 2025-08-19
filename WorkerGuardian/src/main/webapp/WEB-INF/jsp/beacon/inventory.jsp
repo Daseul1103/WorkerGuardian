@@ -180,12 +180,12 @@
                                     <th scope="row">비콘 위험 거리</th>
                                     <td></td>
                                 </tr>
-                                <tr>
+ <!--                                <tr>
                                     <th scope="row">비콘 X축 위치</th>
                                     <td></td>
                                     <th scope="row">비콘 Y축 위치</th>
                                     <td></td>
-                                </tr>
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>

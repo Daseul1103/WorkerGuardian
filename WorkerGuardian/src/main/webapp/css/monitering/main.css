@@ -132,7 +132,6 @@
         .sitemenu {
             width: 100%;
             height: auto;
-            /* overflow-y: auto; */
             overflow-y: scroll;
             border: 1px solid #ccc;
             padding: 5px;
@@ -167,7 +166,7 @@
 	        background-color: #fff;
 	        font-size: 14px;
 	        text-align: center;
-	        pointer : cursor;
+	        cursor:pointer;
         }
 
         .site-item.highlight {
@@ -180,8 +179,8 @@
         	background-size: contain;         
             background-repeat: no-repeat; 
             
-            width: 100px;
-		    height: 60px;
+            width: 50px;
+		    height: 36px;
         }
         
         #beacon1 , #beacon7 , #beacon10 , #beacon13{

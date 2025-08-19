@@ -1,6 +1,7 @@
 package egovframework.example.beacon.mapper;
 
 import egovframework.example.beacon.vo.BeaconVO;
+import egovframework.example.main.vo.MainVO;
 import egovframework.example.view.vo.ViewVO;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 import java.util.List;
@@ -30,5 +31,8 @@ public interface BeaconMapper {
     
     // 비콘 정보 수정하기
     void updateBeacon(BeaconVO beaconVO) throws Exception;
+    
+	// 선택된 현장 화면 정보 가져오기
+	MainVO backgroundInfo(String paramString) throws Exception;
 }
 

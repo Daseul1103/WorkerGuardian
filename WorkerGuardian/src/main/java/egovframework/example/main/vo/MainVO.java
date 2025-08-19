@@ -9,9 +9,9 @@ public class MainVO {
 	  
 	public String BEACON_NAME;  // 비콘 이름(별칭)
 	  
-	public String BEACON_Y;  // 비콘 y값
+	public double BEACON_Y;  // 비콘 y값
 	  
-	public String BEACON_X;  // 비콘 x값
+	public double BEACON_X;  // 비콘 x값
 	  
 	public String FILE_NAME;  // 현장 파일 이름
 	
@@ -100,19 +100,19 @@ public class MainVO {
 		BEACON_NAME = bEACON_NAME;
 	}
 
-	public String getBEACON_Y() {
+	public double getBEACON_Y() {
 		return BEACON_Y;
 	}
 
-	public void setBEACON_Y(String bEACON_Y) {
+	public void setBEACON_Y(double bEACON_Y) {
 		BEACON_Y = bEACON_Y;
 	}
 
-	public String getBEACON_X() {
+	public double getBEACON_X() {
 		return BEACON_X;
 	}
 
-	public void setBEACON_X(String bEACON_X) {
+	public void setBEACON_X(double bEACON_X) {
 		BEACON_X = bEACON_X;
 	}
 

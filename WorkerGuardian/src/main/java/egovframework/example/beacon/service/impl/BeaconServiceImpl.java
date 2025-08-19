@@ -3,6 +3,7 @@ package egovframework.example.beacon.service.impl;
 import egovframework.example.beacon.mapper.BeaconMapper;
 import egovframework.example.beacon.service.BeaconService;
 import egovframework.example.beacon.vo.BeaconVO;
+import egovframework.example.main.vo.MainVO;
 import egovframework.example.view.vo.ViewVO;
 import java.util.List;
 import javax.annotation.Resource;
@@ -57,6 +58,12 @@ public class BeaconServiceImpl implements BeaconService {
     @Override
     public void updateBeacon(BeaconVO vo) throws Exception {
         beaconMapper.updateBeacon(vo);
+    }
+    
+	// 선택된 현장 화면 정보 가져오기
+    @Override
+    public MainVO backgroundInfo(String siteId) throws Exception {
+        return beaconMapper.backgroundInfo(siteId);
     }
     
 }

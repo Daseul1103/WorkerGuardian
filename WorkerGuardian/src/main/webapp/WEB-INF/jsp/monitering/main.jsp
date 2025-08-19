@@ -11,7 +11,28 @@
 	
     <script>
 	    $(document).ready(function () {
-	
+			
+			var w = $('.monitering_div').width();   // 내용 영역(content) 기준 가로 길이
+			var h = $('.monitering_div').height();  // 내용 영역(content) 기준 세로 길이
+
+			console.log("가로:", w, "세로:", h);
+			
+			$('.monitering_div').on('click', function(e) {
+			    // div의 크기
+			    var divWidth = $(this).width();
+			    var divHeight = $(this).height();
+			    
+			    // 클릭한 좌표 (div 내부 기준)
+			    var clickX = e.offsetX;
+			    var clickY = e.offsetY;
+			    
+			    // 퍼센트로 변환
+			    var percentX = (clickX / divWidth) * 100;
+			    var percentY = (clickY / divHeight) * 100;
+			    
+			    console.log("X:", percentX.toFixed(2) + "%, Y:", percentY.toFixed(2) + "%");
+			});
+
 	    	var siteList;
 	    	
 	        // 첫 진입 시 현장 선택 메뉴 정보 불러오기
@@ -90,12 +111,34 @@
 				
 				        orgId = data.OrgId;
 				        
+				        var containerWidth = $('.monitering_div').width();
+				        var containerHeight = $('.monitering_div').height();
+	        
 				        beaconInfoList.forEach(function(beaconInfo) {
-				            var style = 'margin-left: ' + beaconInfo.beacon_X + '%; margin-top: ' + beaconInfo.beacon_Y + '%;';
+				        	
+				        	var percentX = parseFloat(beaconInfo.beacon_X);
+				        	var percentY = parseFloat(beaconInfo.beacon_Y);
+				        	
+/* 				        	console.log(percentX);
+				        	console.log(percentY);
+				        	
+				        	var leftPos = (percentX / 100) * containerWidth;
+				        	var topPos = (percentY / 100) * containerHeight;
+				        	
+				        	console.log(leftPos);
+				        	console.log(topPos);
+				        	
+				        	var size = 100;
+				        	leftPos -= size / 2;
+				        	leftPos += 5;
+				        	topPos -= 10; */
+				        	
+				        	
+				            var style = 'left: '+ percentX + '%; top: ' + percentY + '%; transform: translate(-38%, -10%);';
 				            html += '<div id="' + beaconInfo.uuid + '" class="beacon-box" style="' + style + '">';
 				            html +=     '<div class="beaconImg"></div>';
 				            html +=     '<div>';
-				            html +=         '<p style="margin-right: 26px; color: white;">' + beaconInfo.beacon_NAME + '</p>';
+				            html +=         '<p style="color: white;">' + beaconInfo.beacon_NAME + '</p>';
 				            html +=     '</div>';
 				            html += '</div>\n';
 				            
@@ -336,11 +379,7 @@
                     <h1 style="margin: 0;">현장 선택</h1>
                 </div>
                 <div class="sitemenu">
-                    <!-- <div id="Kc2Ah" class="site-item">현장 1</div>
-                    <div id="Kl0Zr" class="site-item">현장 2</div>
-                    <div id="q3333" class="site-item">현장 3</div>
-                    <div id="w4444" class="site-item">현장 4</div>
-                    <div id="e5555" class="site-item">현장 5</div> -->
+
                 </div>
             </div>
             <div class="message_div">
@@ -351,7 +390,7 @@
 
                     </div>
                 </div>
-            </div>
+            </div> 
         </div>
        
         </div>
