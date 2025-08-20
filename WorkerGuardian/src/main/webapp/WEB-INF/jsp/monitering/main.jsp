@@ -7,80 +7,51 @@
 	<link rel="stylesheet" href="/css/monitering/main.css"/>
 	<script type="text/javascript" charset="utf-8" src="<%=request.getContextPath()%>/js/jquery.js"></script>
 	<script src="/js/jquery-3.7.1.min.js"></script>
-	<script src="/js/common.js"></script>
-	
+	<script src="/js/common.js"></script>	
     <script>
+    
+		// 기본 전역 변수 초기화 및 선언 작업
+		var siteList; 	    	
+	    var ringVal = 1;
+	    
+	    var orgId; 
+	    
+	    // 랜덤 작업자 알림 함수 전용 변수
+	    let workername = []; 
+	    let workerid = [];
+	    let accident = ["낙상", "가스", "위험구역 진입"]; 	        
+	    let beaconId = []; 
+	    let beaconName = []; 	        
+	    var nowSiteName = '';
+	    
+	    
 	    $(document).ready(function () {
-			
-			var w = $('.monitering_div').width();   // 내용 영역(content) 기준 가로 길이
-			var h = $('.monitering_div').height();  // 내용 영역(content) 기준 세로 길이
-
-			console.log("가로:", w, "세로:", h);
-			
-			$('.monitering_div').on('click', function(e) {
-			    // div의 크기
-			    var divWidth = $(this).width();
-			    var divHeight = $(this).height();
-			    
-			    // 클릭한 좌표 (div 내부 기준)
-			    var clickX = e.offsetX;
-			    var clickY = e.offsetY;
-			    
-			    // 퍼센트로 변환
-			    var percentX = (clickX / divWidth) * 100;
-			    var percentY = (clickY / divHeight) * 100;
-			    
-			    console.log("X:", percentX.toFixed(2) + "%, Y:", percentY.toFixed(2) + "%");
-			});
-
-	    	var siteList;
 	    	
-	        // 첫 진입 시 현장 선택 메뉴 정보 불러오기
+	        // 첫 진입 시 현장 메뉴 생성
 	        $.ajax({
-	            url: "/main/siteInfo.ajax",
+	            url: "/main/siteInfo.ajax", // 현장 메뉴 정보 url
 	            success: function(data) {
-	                siteList = data.siteList;
-	                var html = '';
-	
-	                /* siteList.forEach(function(site) {
-	                    html += '<div id="' + site.site_ID + '" class="site-item">' + site.site_NAME + '</div>\n';
-	                }); */
-	                
+	                siteList = data.siteList; // 받아온 데이터 삽입
+	                var html = ''; // 현장 메뉴 text 변수 생성
+   
 	                siteList.forEach(function(site, index) {
-	                    var highlightClass = index === 0 ? ' highlight' : '';
+	                    var highlightClass = index === 0 ? ' highlight' : ''; // 제일 첫 번째 현장은 자동 선택되도록 class 추가
 	                    html += '<div id="' + site.site_ID + '" class="site-item' + highlightClass + '">' + site.site_NAME + '</div>\n';
 	                });
 	
 	                // 클래스명이 sitemenu인 요소 안에 삽입
 	                $('.sitemenu').html(html);
 	                
+	                // 제일 첫 번째 요소 클릭 이벤트 실행
 	                $('.site-item').first().trigger('click');
 	            },
 	            error: function(xhr, status, error) {
 	                console.log('ajax 요청에 문제가 있습니다.', error);
 	            }
 	        });
-
-	        var ringVal = 1;
 	        
-	        var orgId;
-	        let workername = [];
-	        let workerid = [];
-	        var accident = ["낙상", "가스", "위험구역 진입"];
 	        
-	        let beaconId = [];
-	        let beaconName = [];
-	        
-	        var nowSiteName = '';
-	
-	        // 알림 확인 버튼 눌렀을 때
-	        $(document).on('click', '[id^="alramBtn"]', function() {
-	            var nowId = $(this).attr('id').replace('alramBtn', '');
-	            $('#beaconAlram' + nowId).remove();
-	        });
-	        
-	
-	        // 현장 클릭 시 함수 
+	     	// 메뉴에서 현장 클릭 시 실행 함수 
 	        $(document).on('click', '.site-item', function() {
 
 	            // 기존의 클릭 스타일 지우고, 클릭 된 현장에 클릭 스타일 적용
@@ -98,7 +69,7 @@
 				workerid = [];
 				nowSiteName = '';
 				
-	            // 클릭 시 가져온 id 사용하여 해당 현장의 비콘 정보 가져오기(ajax)
+	            // 클릭 된 해당 현장의 비콘 정보 가져오기(ajax)
 	            $.ajax({
 				    url: "/main/selectBeaconInfo.ajax",
 				    data: { "siteId": siteId },
@@ -119,21 +90,6 @@
 				        	var percentX = parseFloat(beaconInfo.beacon_X);
 				        	var percentY = parseFloat(beaconInfo.beacon_Y);
 				        	
-/* 				        	console.log(percentX);
-				        	console.log(percentY);
-				        	
-				        	var leftPos = (percentX / 100) * containerWidth;
-				        	var topPos = (percentY / 100) * containerHeight;
-				        	
-				        	console.log(leftPos);
-				        	console.log(topPos);
-				        	
-				        	var size = 100;
-				        	leftPos -= size / 2;
-				        	leftPos += 5;
-				        	topPos -= 10; */
-				        	
-				        	
 				            var style = 'left: '+ percentX + '%; top: ' + percentY + '%; transform: translate(-38%, -10%);';
 				            html += '<div id="' + beaconInfo.uuid + '" class="beacon-box" style="' + style + '">';
 				            html +=     '<div class="beaconImg"></div>';
@@ -145,8 +101,7 @@
 					        // 비콘 정보 배열에 넣기
 					        beaconId.push(beaconInfo.uuid);           // id 배열에 넣기
 	    					beaconName.push(beaconInfo.beacon_NAME);  // 비콘 이름 배열에 넣기
-	    					
-				         
+	         
 				        });
 				        
 				        workerInfoList.forEach(function(workerInfo) {
@@ -171,7 +126,7 @@
 		            		return false;
 		            	} else {
 		            		// 이후 작업 진행 - 비콘 정보 배열 사용해서 랜덤으로 안내 메세지 뜨게하는 함수 실행하기
-				            interval = setInterval(function() { randomAlram( beaconId,beaconName,siteId ) }, 15000);
+				            let interval = setInterval(function() { randomAlram( beaconId,beaconName,siteId,workername ) }, 15000);
 		            	}
     		            	
 				    },
@@ -180,9 +135,16 @@
 				    }
 				});
 	        });
+	     
+	     
+	
+	        // 알림 확인 버튼 눌렀을 때
+	        $(document).on('click', '[id^="alramBtn"]', function() {
+	            var nowId = $(this).attr('id').replace('alramBtn', '');
+	            $('#beaconAlram' + nowId).remove();
+	        });
 	        
-	        
-	        
+
 	     	// 도움말 파일 다운로드하기
             $('.help').on('click', function() {
             	helpDownLoad();
@@ -197,24 +159,21 @@
 	     	$('.mypage').on('click', function() {
 	     		mypageGo();
 	     	});
-	        
-	
+         	
+
 	    });
 	    
 	    
-	 // 알람 띄우기 전 사전 작업 함수
-        function randomAlram(beaconId, beaconName ,siteId) {
+	 	// 알람 띄우기 전 사전 작업 함수
+        function randomAlram(beaconId, beaconName ,siteId, workername) {
         	
         	// 받아온 데이터가 있는지 확(비어 있는지)
         	if (!beaconId.length || !beaconName.length) {
-		        /* console.log("비콘 정보가 없습니다."); */
 		        return false;
 		    } else {
 		    	if (beaconId.length !== beaconName.length) { // 길이가 다르면 안됨
-		            /* console.log("비콘 ID와 이름 배열 길이가 다릅니다."); */
 		            return false;
 		        } else {
-		        	/* console.log("길이 같음"); */
 		        	var arrayLength = beaconId.length;
 		        	var randomIndex = Math.floor(Math.random() * arrayLength);  // 비콘 고르기 전용 랜덤 변수
 					
@@ -241,22 +200,23 @@
 		    }
         	
         	
+        	// 알림 만들어서 띄워주는 함수
         	function makeAlram(randomIndex,workerIndex,accidentIndex,currentDateTime,siteId) {
         		
         		var dOrgId = orgId;
-    	 		  var dSiteId = siteId;
-    	 		  var dBeaconId = beaconId[randomIndex];
-    	 		  var dWorkerId = workerid[workerIndex];
-    	 		  var dEventType = '';
+    	 		var dSiteId = siteId;
+    	 		var dBeaconId = beaconId[randomIndex];
+    	 		var dWorkerId = workerid[workerIndex];
+    	 		var dEventType = '';
     	 		  
     	 		  
-    	 		  if(accidentIndex == 0) {
+    	 		if(accidentIndex == 0) {
     	 			dEventType = "F";
-    	 		  } else if(accidentIndex == 1) {
+    	 		} else if(accidentIndex == 1) {
     	 			dEventType = "G";
-    	 		  } else {
+    	 		} else {
     	 			dEventType = "D";
-    	 		  }
+    	 		}
     	 		 
     	 		  
     	 		$.ajax({
@@ -270,7 +230,7 @@
 				        "EVENT_TIME" : currentDateTime
 				    },
 				    success: function(data) {
-				    	console.log("ajax 성공");
+				    	
 				    },    				    
 				    error: function(xhr, status, error) {
 				        console.log('ajax 요청에 문제가 있습니다.', error);

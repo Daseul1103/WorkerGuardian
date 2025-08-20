@@ -8,23 +8,28 @@
 <head>
 	<title>WorkerGuardian</title>
 	<link rel="stylesheet" href="/css/safeevent/safeevent.css"/>
+	<link rel="stylesheet" href="//cdn.datatables.net/2.3.2/css/dataTables.dataTables.min.css"/>
 	<script type="text/javascript" charset="utf-8" src="<%=request.getContextPath()%>/js/jquery.js"></script>
 	<script src="/js/jquery-3.7.1.min.js"></script>
+	<script src="//cdn.datatables.net/2.3.2/js/dataTables.min.js"></script>
 	<script src="/js/common.js"></script>
 	
 	<script>
 	  $(document).ready(function() {
 		
-/* 		// 검색 조건 기본 날짜 초기화 작업
-		var today = new Date();
-		var yyyy = today.getFullYear();
-		var mm = String(today.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작
-		var dd = String(today.getDate()).padStart(2, '0');
-		var formattedDate = yyyy + '-' + mm + '-' + dd;
-
-		$('#start_date').val(formattedDate);
-		$('#end_date').val(formattedDate); */
-			 
+		  let table = new DataTable('#safeeventTable', {
+              searching: false,   
+              lengthChange: false,
+              ordering: false,
+              pageLength: 10,     
+              language: {
+                  emptyTable: "표에 데이터가 없습니다.",
+                  info: "_TOTAL_개 중 _START_부터 _END_까지 표시",
+                  infoEmpty: "데이터 없음",
+                  infoFiltered: "(전체 _MAX_개 중 필터링됨)",
+              }
+          });
+		  
 		 // 엑셀 파일 다운로드 버튼 클릭 함수
 	    $('.fileDownBtn').on('click', function() {
 	    	searchFrm.action = '/safetyEvent/ExcellDownLoad.do';
@@ -203,39 +208,36 @@
                         <button class="fileDownBtn">파일 저장</button>
                     </div>
                     <div class="table_div">
-                        <table class="table">
-                            <colgroup>
-                                <col style="width: 18%;">
-                                <col style="width: 18%;">
-                                <col style="width: auto;">
-                            </colgroup>
-                            <thead style="border-top: 2px solid #305363;">
-                                <th scope="col" style="text-align: center;">이벤트 종류</th>
-                                <th scope="col" style="text-align: center;">발생 일시</th>
-                                <th scope="col" style="text-align: center;">내용</th>
-                            </thead>
-                            <tbody>
-                            <c:if test="${empty safetyList}">
-							    <tr>
-							        <td colspan="3" style="text-align: center;">결과가 없습니다.</td>
-							    </tr>
-							</c:if>
-                                <c:forEach var="safety" items="${safetyList}">
-								    <tr>
-								        <td>
-								            <c:choose>
-								                <c:when test="${safety.EVENT_TYPE == 'L'}">접근 제한</c:when>
-								                <c:when test="${safety.EVENT_TYPE == 'G'}">유해 가스</c:when>
-								                <c:when test="${safety.EVENT_TYPE == 'F'}">낙상 사고</c:when>
-								                <c:otherwise>기타</c:otherwise> 
-								            </c:choose>
-								        </td>
-								        <td>${fn:replace(safety.REG_DATE, '.0', '')}</td>
-								        <td>${safety.EVENT_CONTENT}</td>
-								    </tr>
-								</c:forEach>
-                            </tbody>
-                        </table>
+                        <table class="table" id="safeeventTable">
+<%-- 						    <colgroup>
+						        <col style="width: 18%;">
+						        <col style="width: 18%;">
+						        <col style="width: auto;">
+						    </colgroup> --%>
+						    <thead style="border-top: 2px solid #305363;">
+						        <tr>
+						            <th scope="col" style="text-align: center;">이벤트 종류</th>
+						            <th scope="col" style="text-align: center;">발생 일시</th>
+						            <th scope="col" style="text-align: center;">내용</th>
+						        </tr>
+						    </thead>
+						    <tbody>
+						        <c:forEach var="safety" items="${safetyList}">
+						            <tr>
+						                <td>
+						                    <c:choose>
+						                        <c:when test="${safety.EVENT_TYPE == 'L'}">접근 제한</c:when>
+						                        <c:when test="${safety.EVENT_TYPE == 'G'}">유해 가스</c:when>
+						                        <c:when test="${safety.EVENT_TYPE == 'F'}">낙상 사고</c:when>
+						                        <c:otherwise>기타</c:otherwise>
+						                    </c:choose>
+						                </td>
+						                <td>${fn:replace(safety.REG_DATE, '.0', '')}</td>
+						                <td>${safety.EVENT_CONTENT}</td>
+						            </tr>
+						        </c:forEach>
+						    </tbody>
+						</table>
                         
                     </div>
                 </div>
